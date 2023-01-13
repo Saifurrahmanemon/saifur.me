@@ -3,18 +3,17 @@
 # Please see the documentation for all configuration options:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
-
 version: 2
 updates:
   - package-ecosystem: npm
-    directory: "/"
+    directory: '/'
     schedule:
-      interval: daily
-      time: "21:00"
-    open-pull-requests-limit: 10
+      interval: weekly
+      time: '21:00'
+    open-pull-requests-limit: 5
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: '/'
     schedule:
-      interval: daily
-      time: "21:00"
+      interval: weekly
+      time: '21:00'
     open-pull-requests-limit: 10
