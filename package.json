@@ -34,7 +34,7 @@
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
     "autoprefixer": "^10.4.13",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^8.6.0",
     "husky": "^8.0.0",
     "postcss": "^8.4.20",
     "prettier": "2.8.1",
