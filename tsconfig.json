@@ -8,6 +8,12 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/ui/*": ["ui/*"],
+      "~/lib/*": ["lib/*"],
+      "~/public/*": ["public/*"]
+    },
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
