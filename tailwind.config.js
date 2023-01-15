@@ -25,6 +25,11 @@ module.exports = {
           900: '#111111'
         }
       },
+      backgroundImage: ({ theme }) => ({
+        'vc-border-gradient': `radial-gradient(at left top, ${theme(
+          'colors.gray.500'
+        )}, 50px, ${theme('colors.gray.800')} 50%)`
+      }),
       fontFamily: {
         sans: ['Inter', ...fontFamily.sans]
       },
