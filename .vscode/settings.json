@@ -1,9 +1,5 @@
 {
-  "cSpell.words": [
-    "callout",
-    "commitlint",
-    "tailwindcss"
-  ],
+  "cSpell.words": ["callout", "commitlint", "tailwindcss"],
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "typescript.enablePromptUseWorkspaceTsdk": true
 }
