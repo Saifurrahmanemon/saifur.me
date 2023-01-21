@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# custom
+#gradient file is too heavy rn.
+/ui/gradient-background.tsx

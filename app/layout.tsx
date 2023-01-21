@@ -1,6 +1,7 @@
 import React from 'react';
 import 'styles/globals.css';
 import 'styles/tailwind.css';
+import NavMenu from '~/ui/navbar';
 import Providers from './providers';
 
 export default function RootLayout({
@@ -12,7 +13,10 @@ export default function RootLayout({
     <html>
       <head />
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <NavMenu />
+          {children}
+        </Providers>
       </body>
     </html>
   );
