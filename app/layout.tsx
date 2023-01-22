@@ -15,7 +15,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <NavMenu />
-          {children}
+          <div className="app-container">{children}</div>
         </Providers>
       </body>
     </html>

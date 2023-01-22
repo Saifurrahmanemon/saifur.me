@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer utilities {
+  .app-container {
+    @apply mx-auto max-w-7xl;
+  }
   .bg-primary {
     @apply bg-white dark:bg-gray-900;
   }
