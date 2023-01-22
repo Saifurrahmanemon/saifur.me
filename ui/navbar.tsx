@@ -22,7 +22,7 @@ const navItems = (
       {LINKS.map((link) => (
         <NavItem key={link.id} link={link} />
       ))}
-      <div className="w-1/6 flex gap-3 items-center justify-center truncate uppercase select-none font-semibold text-md rounded py-2 h-full shadow-md dark:shadow-slate-400 shadow-blue-500/20 absolute transform transition-transform  duration-700  ease-out tabAnim"></div>
+      <div className="w-1/6  flex gap-3 items-center justify-center truncate uppercase select-none font-semibold text-md rounded py-2 h-full shadow-md dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800 shadow-blue-500/20 absolute transform transition-transform  duration-700  ease-out "></div>
     </div>
   </main>
 );
