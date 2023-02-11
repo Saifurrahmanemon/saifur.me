@@ -35,10 +35,14 @@
   }
 
   .text-secondary {
-    @apply dark:text-slate-300 text-gray-600;
+    @apply text-gray-600 dark:text-slate-300;
   }
 
   .text-inverse {
     @apply text-white dark:text-black;
+  }
+
+  .background-drop {
+    @apply backdrop-filter backdrop-blur-[1px] bg-opacity-5;
   }
 }
