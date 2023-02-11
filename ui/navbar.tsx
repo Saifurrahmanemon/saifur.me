@@ -1,7 +1,9 @@
 'use client';
 
 import clsx from 'clsx';
-import { Fragment, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { Fragment, useState } from 'react';
+import { HomeIcon } from './icons';
 import { NavItem } from './nav-item';
 import ThemeSwitch from './theme-switch';
 
@@ -9,13 +11,14 @@ export interface INavItem {
   text: string;
   href: string;
   id: number;
+  Icon?: React.ReactNode;
 }
 
 const LINKS: INavItem[] = [
-  { text: 'Home', href: '/', id: 0 },
-  { text: 'Blog', href: '/blog', id: 1 },
-  { text: 'Projects', href: '/projects', id: 2 },
-  { text: 'About', href: '/about', id: 3 }
+  { text: 'Home', href: '/', id: 0, Icon: <HomeIcon /> },
+  { text: 'Blog', href: '/blog', id: 1, Icon: <HomeIcon /> },
+  { text: 'Projects', href: '/projects', id: 2, Icon: <HomeIcon /> },
+  { text: 'About', href: '/about', id: 3, Icon: <HomeIcon /> }
 ];
 
 const navItems = (
@@ -44,44 +47,65 @@ const navbar = (
   </div>
 );
 
-function NavMenu() {
+function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const mobileMenu = (
+  const router = useRouter();
+  return (
     <div
-      className="fixed block w-full h-full sm:hidden"
-      onClick={() => setIsOpen(!isOpen)}
+      className={clsx(
+        isOpen && 'backdrop-blur-sm',
+        'fixed block w-full h-full sm:hidden transition-all delay-150'
+      )}
     >
-      <div className="absolute flex items-center justify-center overflow-hidden border border-gray-200/80 dark:border-gray-600/80 w-14 h-14 rounded-xl right-4 top-4">
-        <div className="flex items-center justify-center w-20 h-20 p-2 cursor-pointer group rounded-3xl backdrop-filter backdrop-blur-[1px] bg-opacity-5  shadow-surface-glass">
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className="absolute flex items-center justify-center overflow-hidden border border-gray-200/80 dark:border-gray-600/80 w-14 h-14 rounded-xl right-4 top-4 "
+      >
+        <div className="flex items-center justify-center w-full h-20 p-2 cursor-pointer group rounded-3xl background-drop ">
           <div className="space-y-2">
             <span
               className={clsx(
-                isOpen ? '' : 'translate-y-1.5 rotate-45',
+                !isOpen ? '' : 'translate-y-1.5 rotate-45',
                 'block h-1 w-10 origin-center rounded-full bg-slate-500 transition-all ease-in-out duration-500'
               )}
             ></span>
             <span
               className={clsx(
-                isOpen ? 'w-8' : ' w-10 -translate-y-1.5 -rotate-45',
+                !isOpen ? 'w-8' : ' w-10 -translate-y-1.5 -rotate-45',
                 'block h-1 origin-center rounded-full bg-slate-500 transition-all ease-in-out duration-500'
               )}
             ></span>
           </div>
         </div>
       </div>
-      <div className="absolute flex flex-col items-start justify-start h-full right-4 top-12">
-        {LINKS.map((item) => (
-          <div key={item.text}>{item.text}</div>
-        ))}
-      </div>
+      {isOpen ? (
+        <div className="absolute flex flex-col items-center justify-start gap-5 rounded-md right-2 top-20 backdrop-blur-2xl">
+          {LINKS.map((item) => (
+            <div
+              onClick={() => router.push(item.href)}
+              key={item.text}
+              className="z-10 flex flex-col items-center justify-center p-2 border-b-2 cursor-pointer"
+            >
+              <div>{item.Icon}</div>
+              <p className="text-sm font-bold z-1">{item.text}</p>
+            </div>
+          ))}
+          <div className="p-2">
+            <ThemeSwitch />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
+}
 
+function NavMenu() {
   return (
     <Fragment>
       <div className="fixed block w-full">{navbar}</div>
-      <div>{mobileMenu}</div>
+      <div>
+        <MobileMenu />
+      </div>
     </Fragment>
   );
 }
