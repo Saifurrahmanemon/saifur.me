@@ -10,6 +10,16 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      keyframes: {
+        borderSpin: {
+          '100%': {
+            transform: 'rotate(360deg)'
+          }
+        }
+      },
+      animation: {
+        borderSpin: 'spin 3s linear infinite'
+      },
       colors: {
         'blue-opaque': 'rgb(13 42 148 / 18%)',
         gray: {
