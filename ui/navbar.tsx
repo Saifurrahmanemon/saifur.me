@@ -1,9 +1,10 @@
 'use client';
 
 import clsx from 'clsx';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
-import { HomeIcon } from './icons';
+import { BlogIcon, BuildIcon, HomeIcon, UserIcon } from './icons';
 import { NavItem } from './nav-item';
 import ThemeSwitch from './theme-switch';
 
@@ -16,9 +17,9 @@ export interface INavItem {
 
 const LINKS: INavItem[] = [
   { text: 'Home', href: '/', id: 0, Icon: <HomeIcon /> },
-  { text: 'Blog', href: '/blog', id: 1, Icon: <HomeIcon /> },
-  { text: 'Projects', href: '/projects', id: 2, Icon: <HomeIcon /> },
-  { text: 'About', href: '/about', id: 3, Icon: <HomeIcon /> }
+  { text: 'Blog', href: '/blog', id: 1, Icon: <BlogIcon /> },
+  { text: 'Projects', href: '/projects', id: 2, Icon: <BuildIcon /> },
+  { text: 'About', href: '/about', id: 3, Icon: <UserIcon /> }
 ];
 
 const navItems = (
@@ -47,14 +48,45 @@ const navbar = (
   </div>
 );
 
+const mobileVariants = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3
+    }
+  },
+  closed: {
+    y: -20,
+    opacity: 0,
+    transition: {
+      duration: 0.3
+    }
+  },
+  iconShow: {
+    opacity: 1,
+    transition: {
+      ease: 'easeOut',
+      duration: 0.3
+    }
+  },
+  iconHide: {
+    opacity: 0,
+    transition: {
+      ease: 'easeIn',
+      duration: 0.3
+    }
+  }
+};
+
 function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   return (
-    <div
+    <motion.div
       className={clsx(
         isOpen && 'backdrop-blur-sm',
-        'fixed block w-full h-full sm:hidden transition-all delay-150'
+        'fixed block w-full h-full sm:hidden transition-all duration-300'
       )}
     >
       <div
@@ -66,36 +98,56 @@ function MobileMenu() {
             <span
               className={clsx(
                 !isOpen ? '' : 'translate-y-1.5 rotate-45',
-                'block h-1 w-10 origin-center rounded-full bg-slate-500 transition-all ease-in-out duration-500'
+                'block h-1 w-10 origin-center rounded-full bg-slate-500 transition-all ease-in-out duration-300'
               )}
             ></span>
             <span
               className={clsx(
                 !isOpen ? 'w-8' : ' w-10 -translate-y-1.5 -rotate-45',
-                'block h-1 origin-center rounded-full bg-slate-500 transition-all ease-in-out duration-500'
+                'block h-1 origin-center rounded-full bg-slate-500 transition-all ease-in-out duration-300'
               )}
             ></span>
           </div>
         </div>
       </div>
-      {isOpen ? (
-        <div className="absolute flex flex-col items-center justify-start gap-5 rounded-md right-2 top-20 backdrop-blur-2xl">
-          {LINKS.map((item) => (
-            <div
-              onClick={() => router.push(item.href)}
-              key={item.text}
-              className="z-10 flex flex-col items-center justify-center p-2 border-b-2 cursor-pointer"
+      <AnimatePresence>
+        {isOpen ? (
+          <motion.div
+            initial={false}
+            exit={{ opacity: 0 }}
+            className="absolute flex flex-col items-center justify-start gap-5 rounded-md right-2 top-20 backdrop-blur-2xl"
+          >
+            {LINKS.map((item) => (
+              <motion.div
+                onClick={() => {
+                  router.push(item.href);
+                  setIsOpen((state) => !state);
+                }}
+                key={item.text}
+                variants={mobileVariants}
+                animate={isOpen ? 'open' : 'closed'}
+                initial="closed"
+                exit="closed"
+                whileTap={{ scale: 0.95 }}
+                className="z-10 flex flex-col items-center justify-center p-2 border-b-2 cursor-pointer"
+              >
+                <div>{item.Icon}</div>
+                <p className="text-sm font-bold z-1">{item.text}</p>
+              </motion.div>
+            ))}
+            <motion.div
+              variants={mobileVariants}
+              initial="iconHide"
+              animate="iconShow"
+              exit="iconHide"
+              className="p-2"
             >
-              <div>{item.Icon}</div>
-              <p className="text-sm font-bold z-1">{item.text}</p>
-            </div>
-          ))}
-          <div className="p-2">
-            <ThemeSwitch />
-          </div>
-        </div>
-      ) : null}
-    </div>
+              <ThemeSwitch />
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
