@@ -9,6 +9,12 @@ function HeroSection() {
             Software Developer at{' '}
             <span className="font-semibold">Earnest Fintech LTD.</span>
           </h2>
+          <button
+            className="p-2 bg-teal-400 cursor-pointer"
+            onClick={() => window.alert('button clicked')}
+          >
+            click me
+          </button>
           <p className="max-w-md mb-16 text-secondary">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt
             accusamus tempora dolores aperiam iste? Vero, eos dolores error

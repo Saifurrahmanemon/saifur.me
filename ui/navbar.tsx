@@ -29,7 +29,7 @@ const navItems = (
         {LINKS.map((link) => (
           <NavItem key={link.id} link={link} />
         ))}
-        <div className="absolute flex items-center justify-center w-1/6 h-full gap-3 py-2  font-semibold  transition-transform duration-700 ease-out transform rounded shadow-md select-none text-sm   dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800/25 shadow-blue-500/20 "></div>
+        <div className="absolute flex items-center justify-center w-1/6 h-full gap-3 py-2 text-sm font-semibold transition-transform duration-700 ease-out transform rounded shadow-md select-none dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800/25 shadow-blue-500/20 "></div>
       </div>
     </div>
   </div>
@@ -91,14 +91,17 @@ function MobileMenu() {
   return (
     <div>
       <div className="fixed">
-        <div className="absolute left-4 top-6">
+        <div
+          onClick={() => router.push('/')}
+          className="absolute cursor-pointer left-4 top-6"
+        >
           <LatterLogo h="2rem" />
         </div>
       </div>
       <motion.div
         className={clsx(
-          isOpen && 'backdrop-blur-sm',
-          'fixed block w-full h-full sm:hidden transition-all duration-300'
+          isOpen && 'backdrop-blur-sm w-full h-full',
+          'fixed block w-full  sm:hidden transition-all duration-300'
         )}
       >
         <div
