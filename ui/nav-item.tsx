@@ -23,7 +23,7 @@ export function NavItem({ link }: { link: INavItem }) {
         htmlFor={`nav-item-${link.id}`}
         className={clsx(
           !isActive && 'hover:text-black dark:hover:text-white cursor-pointer ',
-          'w-1/6 z-10 flex gap-3 items-center justify-center truncate uppercase select-none font-semibold text-md xl:text-lg rounded py-2 transition-all duration-300 ease-in text-secondary '
+          'w-1/6 z-10 flex gap-3 items-center justify-center   select-none font-semibold text-md xl:text-md rounded py-2 transition-all duration-300 ease-in text-secondary '
         )}
       >
         {link.text}
