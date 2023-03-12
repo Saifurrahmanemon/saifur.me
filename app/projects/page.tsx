@@ -1,5 +1,12 @@
+'use client';
+import { LatterLogo } from '~/ui/icons';
+
 function ProjectsPage() {
-  return <div>ProjectsPage</div>;
+  return (
+    <div>
+      <LatterLogo />
+    </div>
+  );
 }
 
 export default ProjectsPage;
