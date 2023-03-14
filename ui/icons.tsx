@@ -201,7 +201,7 @@ export function LatterLogo({ w = '2.75rem', h = '2.75rem' }: LatterLogoProps) {
     visible: {
       opacity: 1,
       pathLength: 1,
-      transition: { duration: 0.5, type: 'spring', stiffness: 10 },
+      transition: { duration: 0.5, type: 'spring', stiffness: 15 },
       ease: 'easeInOut'
     }
   };
