@@ -1,12 +1,12 @@
 'use client';
 
 import clsx from 'clsx';
-import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { INavItem } from './navbar';
 
 export function NavItem({ link }: { link: INavItem }) {
   const pathname = usePathname();
-  const router = useRouter();
   const isActive = pathname === link.href;
 
   return (
@@ -18,16 +18,16 @@ export function NavItem({ link }: { link: INavItem }) {
         defaultChecked={isActive}
         className="appearance-none"
       />
-      <label
-        onClick={() => router.push(link.href)}
-        htmlFor={`nav-item-${link.id}`}
+      <Link
+        href={link.href}
+        id={`nav-item-${link.id}`}
         className={clsx(
           !isActive && 'hover:text-black dark:hover:text-white cursor-pointer ',
           'w-1/6 z-10 flex gap-3 items-center justify-center   select-none font-semibold text-md xl:text-md rounded py-2 transition-all duration-300 ease-in text-secondary '
         )}
       >
         {link.text}
-      </label>
+      </Link>
     </>
   );
 }
