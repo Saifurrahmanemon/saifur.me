@@ -21,7 +21,7 @@
     "@headlessui/react": "^1.7.12",
     "@next/font": "13.2.1",
     "@rive-app/react-canvas": "^3.0.36",
-    "@types/node": "18.14.1",
+    "@types/node": "18.15.5",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "classnames": "^2.3.2",
