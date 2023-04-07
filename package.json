@@ -18,7 +18,7 @@
     "check-types": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.12",
+    "@headlessui/react": "^1.7.13",
     "@next/font": "13.2.1",
     "@rive-app/react-canvas": "^3.0.36",
     "@types/node": "18.15.11",
