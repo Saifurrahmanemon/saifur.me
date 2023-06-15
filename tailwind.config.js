@@ -1,5 +1,5 @@
 const { spacing, fontFamily } = require('tailwindcss/defaultTheme');
-
+const defaultTheme = require('tailwindcss/defaultTheme');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -9,6 +9,10 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
+    screens: {
+      xs: '475px',
+      ...defaultTheme.screens
+    },
     extend: {
       keyframes: {
         borderSpin: {
