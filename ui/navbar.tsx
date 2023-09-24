@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 import { BlogIcon, BuildIcon, HomeIcon, LatterLogo, UserIcon } from './icons';
@@ -27,10 +27,19 @@ const navItems = (
   <div className="flex flex-col items-center max-w-3xl p-3 mx-auto">
     <div className="w-full">
       <div className="relative flex w-full">
-        {LINKS.map((link) => (
-          <NavItem key={link.id} link={link} />
-        ))}
-        <div className="absolute flex items-center justify-center w-1/6 h-full gap-3 py-2 text-sm font-semibold transition-transform duration-700 ease-out transform rounded shadow-md select-none dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800/25 shadow-blue-500/20 "></div>
+        <LayoutGroup>
+          <nav
+            className="flex flex-row md:flex-col items-start relative px-4 md:px-0 pb-0  fade md:overflow-auto scroll-pr-6 md:relative"
+            id="nav"
+          >
+            <div className="flex flex-row space-x-0  p-2  md:mt-0">
+              {LINKS.map((link) => (
+                <NavItem key={link.id} link={link} />
+              ))}
+            </div>
+          </nav>
+        </LayoutGroup>
+        {/* <div className="absolute flex items-center justify-center w-1/6 h-full gap-3 py-2 text-sm font-semibold transition-transform duration-700 ease-out transform rounded shadow-md select-none dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800/25 shadow-blue-500/20 "></div> */}
       </div>
     </div>
   </div>
