@@ -92,7 +92,7 @@ a {
   text-decoration: none;
 }
 
-/* styles for animated nav items ?this is ugly I need to refactor this */
+/* styles for animated nav items ?this is ugly I need to refactor this
 #nav-item-0:checked ~ div {
   --tw-translate-x: 0%;
 }
@@ -107,4 +107,4 @@ a {
 
 #nav-item-3:checked ~ div {
   --tw-translate-x: 300%;
-}
+} */
