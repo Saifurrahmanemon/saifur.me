@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { INavItem } from './navbar';
@@ -11,22 +12,30 @@ export function NavItem({ link }: { link: INavItem }) {
 
   return (
     <>
-      <input
-        type="radio"
-        id={`nav-item-${link.id}`}
-        name="nav-link"
-        defaultChecked={isActive}
-        className="appearance-none"
-      />
       <Link
+        key={link.href}
         href={link.href}
-        id={`nav-item-${link.id}`}
         className={clsx(
-          !isActive && 'hover:text-black dark:hover:text-white cursor-pointer ',
-          'w-1/6 z-10 flex gap-3 items-center justify-center   select-none font-semibold text-md xl:text-md rounded py-2 transition-all duration-300 ease-in text-secondary '
+          'transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle',
+          {
+            'font-medium': isActive
+          }
         )}
       >
-        {link.text}
+        <span className="relative py-[5px] px-[10px]">
+          {link.text}
+          {pathname === link.href ? (
+            <motion.div
+              className="absolute inset-0 bg-neutral-100 dark:bg-neutral-900 z-[-1] rounded shadow-md  dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800/25 shadow-blue-500/20 "
+              layoutId="sidebar"
+              transition={{
+                type: 'spring',
+                stiffness: 350,
+                damping: 30
+              }}
+            />
+          ) : null}
+        </span>
       </Link>
     </>
   );
