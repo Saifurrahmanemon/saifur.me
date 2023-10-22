@@ -82,6 +82,8 @@
 
 html,
 body {
+  tab-size: 4;
+
   max-width: 100vw;
   min-width: 360px;
   scroll-behavior: smooth;
@@ -91,20 +93,3 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
-/* styles for animated nav items ?this is ugly I need to refactor this
-#nav-item-0:checked ~ div {
-  --tw-translate-x: 0%;
-}
-
-#nav-item-1:checked ~ div {
-  --tw-translate-x: 100%;
-}
-
-#nav-item-2:checked ~ div {
-  --tw-translate-x: 200%;
-}
-
-#nav-item-3:checked ~ div {
-  --tw-translate-x: 300%;
-} */
