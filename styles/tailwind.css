@@ -35,7 +35,7 @@
   }
 
   .text-secondary {
-    @apply text-gray-600 dark:text-slate-300;
+    @apply text-gray-600 dark:text-zinc-300;
   }
 
   .text-inverse {
@@ -44,5 +44,9 @@
 
   .background-drop {
     @apply backdrop-filter backdrop-blur-[1px] bg-opacity-5;
+  }
+
+  .card-hover {
+    @apply hover:bg-gray-200/50 dark:hover:bg-gray-800/50;
   }
 }
