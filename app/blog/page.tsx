@@ -1,3 +1,5 @@
+'use client';
+
 import Divider from '~/ui/divider';
 
 interface CardProps {
@@ -31,7 +33,7 @@ function BlogPage() {
     <>
       <main className="pt-20 mx-4">
         <section className="flex flex-col gap-4 pt-20 mx-auto">
-          {Array(10)
+          {Array(20)
             .fill(0)
             .map((item) => (
               <Card
