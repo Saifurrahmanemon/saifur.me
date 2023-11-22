@@ -1,7 +1,13 @@
 'use client';
 
 import clsx from 'clsx';
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useMotionValueEvent,
+  useScroll
+} from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 import { BlogIcon, BuildIcon, HomeIcon, LatterLogo, UserIcon } from './icons';
@@ -29,10 +35,10 @@ const navItems = (
       <div className="relative flex w-full">
         <LayoutGroup>
           <nav
-            className="flex flex-row md:flex-col items-start relative px-4 md:px-0 pb-0  fade md:overflow-auto scroll-pr-6 md:relative"
+            className="relative flex flex-row items-start px-4 pb-0 md:flex-col md:px-0 fade md:overflow-auto md:relative"
             id="nav"
           >
-            <div className="flex flex-row space-x-0  p-2  md:mt-0">
+            <div className="flex flex-row p-2 space-x-0 md:mt-0">
               {LINKS.map((link) => (
                 <NavItem key={link.id} link={link} />
               ))}
@@ -45,29 +51,31 @@ const navItems = (
   </div>
 );
 
-const navbar = (
-  <div
-    className={clsx(
-      'relative hidden max-w-2xl px-2 mx-auto my-3 sm:block',
-      navMaxWidth
-    )}
-  >
-    <nav className="z-30 -mx-px bg-gray-600 border border-gray-200 top-1 rounded-2xl backdrop-filter backdrop-blur-sm bg-opacity-5 dark:border-gray-600 shadow-surface-glass">
-      <div className="max-w-5xl px-4 mx-auto">
-        <div className="flex items-center justify-end h-16">
-          <div>
-            <LatterLogo />
-          </div>
-          <div className="w-full">{navItems}</div>
+function Navbar() {
+  return (
+    <div
+      className={clsx(
+        'relative hidden max-w-2xl px-2 mx-auto my-3 sm:block',
+        navMaxWidth
+      )}
+    >
+      <nav className="z-30 -mx-px bg-gray-600 border border-gray-200 top-1 rounded-2xl backdrop-filter backdrop-blur-sm bg-opacity-5 dark:border-gray-600 shadow-surface-glass">
+        <div className="max-w-5xl px-4 mx-auto">
+          <div className="flex items-center justify-end h-16">
+            <div>
+              <LatterLogo />
+            </div>
+            <div className="w-full">{navItems}</div>
 
-          <div>
-            <ThemeSwitch />
+            <div>
+              <ThemeSwitch />
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
-  </div>
-);
+      </nav>
+    </div>
+  );
+}
 
 const mobileVariants = {
   open: {
@@ -183,9 +191,38 @@ function MobileMenu() {
 }
 
 function NavMenu() {
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  let prev: number;
+
+  // logic we use to show/hide the navbar on scroll
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    if (prev > latest) {
+      setHidden(false);
+    }
+    if (prev < latest) {
+      setHidden(true);
+    }
+    prev = latest;
+  });
+
+  const variants = {
+    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: -25 }
+  };
+
   return (
     <Fragment>
-      <div className="fixed block w-full">{navbar}</div>
+      <motion.div
+        variants={variants}
+        animate={hidden ? 'hidden' : 'visible'}
+        transition={{ ease: [0.1, 0.25, 0.3, 1], duration: 0.4 }}
+        className="fixed block w-full"
+      >
+        <Navbar />
+      </motion.div>
       <div className="sm:hidden">
         <MobileMenu />
       </div>

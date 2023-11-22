@@ -26,13 +26,8 @@ export function NavItem({ link }: { link: INavItem }) {
           {link.text}
           {pathname === link.href ? (
             <motion.div
-              className="absolute inset-0 bg-neutral-100 dark:bg-neutral-900 z-[-1] rounded shadow-md  dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800/25 shadow-blue-500/20 "
+              className="absolute inset-0  dark:bg-neutral-900 z-[-1] rounded shadow-md  dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800/25 shadow-blue-500/20 "
               layoutId="sidebar"
-              transition={{
-                type: 'spring',
-                stiffness: 350,
-                damping: 30
-              }}
             />
           ) : null}
         </span>
