@@ -11,7 +11,7 @@ interface CardProps {
 const Card = (props: CardProps) => {
   const { title, date, views } = props;
   return (
-    <div className="flex items-stretch justify-between w-full gap-2 px-3 py-2 transition-all rounded-lg cursor-pointer card-hover ">
+    <div className="flex items-stretch justify-between w-full gap-2 px-3 py-2 transition-all rounded-lg cursor-pointer card-hover">
       <div className="relative flex flex-col ">
         <span className="font-bold text-secondary">{title}</span>
         {views && (
@@ -31,8 +31,8 @@ function BlogPage() {
 
   return (
     <>
-      <main className="pt-20 mx-4">
-        <section className="flex flex-col gap-4 pt-20 mx-auto">
+      <main className="mx-4">
+        <section className="flex flex-col gap-4 pt-10 mx-auto">
           {Array(20)
             .fill(0)
             .map((item) => (
