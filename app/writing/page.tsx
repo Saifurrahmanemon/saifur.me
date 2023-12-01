@@ -26,7 +26,7 @@ const Card = (props: CardProps) => {
   );
 };
 
-function BlogPage() {
+function WritingPage() {
   const date = new Date().toLocaleDateString().toString();
 
   return (
@@ -49,4 +49,4 @@ function BlogPage() {
   );
 }
 
-export default BlogPage;
+export default WritingPage;
