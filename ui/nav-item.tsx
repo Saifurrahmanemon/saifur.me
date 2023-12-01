@@ -13,10 +13,10 @@ export function NavItem({ link }: { link: INavItem }) {
   return (
     <>
       <Link
-        key={link.href}
+        key={link.id}
         href={link.href}
         className={clsx(
-          'transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle',
+          'hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle',
           {
             'font-medium': isActive
           }
@@ -26,13 +26,8 @@ export function NavItem({ link }: { link: INavItem }) {
           {link.text}
           {pathname === link.href ? (
             <motion.div
-              className="absolute inset-0 bg-neutral-100 dark:bg-neutral-900 z-[-1] rounded shadow-md  dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800/25 shadow-blue-500/20 "
-              layoutId="sidebar"
-              transition={{
-                type: 'spring',
-                stiffness: 350,
-                damping: 30
-              }}
+              className="absolute inset-0 rounded shadow-sm dark:bg-neutral-900 dark:bg-zinc-800/25 shadow-blue-500/20 "
+              layoutId="nav"
             />
           ) : null}
         </span>

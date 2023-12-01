@@ -26,7 +26,7 @@ const ThemeSwitch = () => {
       <button
         aria-label="Toggle Dark Mode"
         type="button"
-        className="w-9 h-9 bg-gray-200 rounded-lg dark:bg-gray-600 flex items-center justify-center  hover:ring-1 ring-gray-300  transition-all"
+        className="flex items-center justify-center transition-all bg-gray-200 rounded-lg w-9 h-9 dark:bg-gray-600 hover:ring-1 ring-gray-300"
         onClick={handleToggleTheme}
       >
         <AnimatePresence>

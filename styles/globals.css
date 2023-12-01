@@ -83,10 +83,10 @@
 html,
 body {
   tab-size: 4;
-
   max-width: 100vw;
   min-width: 360px;
   scroll-behavior: smooth;
+  scrollbar-width: thin;
 }
 
 a {
