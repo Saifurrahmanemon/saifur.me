@@ -49,4 +49,8 @@
   .card-hover {
     @apply hover:bg-gray-200/50 dark:hover:bg-gray-800/50;
   }
+
+  .sm-content-pt {
+    @apply pt-20 sm:pt-1;
+  }
 }

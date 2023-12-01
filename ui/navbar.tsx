@@ -1,7 +1,13 @@
 'use client';
 
 import clsx from 'clsx';
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
+import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useMotionValueEvent,
+  useScroll
+} from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 import { BlogIcon, BuildIcon, HomeIcon, LatterLogo, UserIcon } from './icons';
@@ -24,50 +30,47 @@ const LINKS: INavItem[] = [
 ];
 
 const navItems = (
-  <div className="flex flex-col items-center max-w-3xl p-3 mx-auto">
-    <div className="w-full">
-      <div className="relative flex w-full">
-        <LayoutGroup>
-          <nav
-            className="flex flex-row md:flex-col items-start relative px-4 md:px-0 pb-0  fade md:overflow-auto scroll-pr-6 md:relative"
-            id="nav"
-          >
-            <div className="flex flex-row space-x-0  p-2  md:mt-0">
-              {LINKS.map((link) => (
-                <NavItem key={link.id} link={link} />
-              ))}
-            </div>
-          </nav>
-        </LayoutGroup>
-        {/* <div className="absolute flex items-center justify-center w-1/6 h-full gap-3 py-2 text-sm font-semibold transition-transform duration-700 ease-out transform rounded shadow-md select-none dark:shadow-blue-500/30 dark:backdrop-blur-sm dark:bg-zinc-800/25 shadow-blue-500/20 "></div> */}
+  <div className="relative flex w-full p-3">
+    <LayoutGroup id="nav">
+      <div className="flex flex-row p-2 space-x-0 md:mt-0">
+        {LINKS.map((link) => (
+          <NavItem key={link.id} link={link} />
+        ))}
       </div>
-    </div>
+    </LayoutGroup>
   </div>
 );
 
-const navbar = (
-  <div
-    className={clsx(
-      'relative hidden max-w-2xl px-2 mx-auto my-3 sm:block',
-      navMaxWidth
-    )}
-  >
-    <nav className="z-30 -mx-px bg-gray-600 border border-gray-200 top-1 rounded-2xl backdrop-filter backdrop-blur-sm bg-opacity-5 dark:border-gray-600 shadow-surface-glass">
-      <div className="max-w-5xl px-4 mx-auto">
-        <div className="flex items-center justify-end h-16">
-          <div>
-            <LatterLogo />
-          </div>
-          <div className="w-full">{navItems}</div>
+function Navbar() {
+  return (
+    <div
+      className={clsx(
+        'relative hidden max-w-2xl px-2 mx-auto my-3 sm:block',
+        navMaxWidth
+      )}
+    >
+      <nav
+        style={{
+          transition: 'backdrop-filter 0.3s ease-out'
+        }}
+        className="z-30 -mx-px bg-gray-600 border border-gray-200 top-1 rounded-2xl backdrop-filter backdrop-blur-[3px] bg-opacity-5 dark:border-gray-600 shadow-surface-glass"
+      >
+        <div className="max-w-5xl px-4 mx-auto">
+          <div className="flex items-center justify-end h-16">
+            <div>
+              <LatterLogo />
+            </div>
+            <div className="w-full">{navItems}</div>
 
-          <div>
-            <ThemeSwitch />
+            <div>
+              <ThemeSwitch />
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
-  </div>
-);
+      </nav>
+    </div>
+  );
+}
 
 const mobileVariants = {
   open: {
@@ -121,19 +124,19 @@ function MobileMenu() {
       >
         <div
           onClick={() => setIsOpen(!isOpen)}
-          className="absolute flex items-center justify-center overflow-hidden border border-gray-200/80 dark:border-gray-600/80 w-14 h-14 rounded-xl right-4 top-4 "
+          className="absolute flex items-center justify-center overflow-hidden border w-11 h-11 border-gray-200/80 dark:border-gray-600/80 rounded-xl right-5 top-4 "
         >
-          <div className="flex items-center justify-center w-full h-20 p-2 cursor-pointer group rounded-3xl background-drop ">
+          <div className="flex items-center justify-center w-full h-16 p-2 cursor-pointer group rounded-3xl background-drop ">
             <div className="space-y-2">
               <span
                 className={clsx(
                   !isOpen ? '' : 'translate-y-1.5 rotate-45',
-                  'block h-1 w-10 origin-center rounded-full bg-slate-500 transition-all ease-in-out duration-300'
+                  'block h-1 w-7 origin-center rounded-full bg-slate-500 transition-all ease-in-out duration-300'
                 )}
               ></span>
               <span
                 className={clsx(
-                  !isOpen ? 'w-8' : ' w-10 -translate-y-1.5 -rotate-45',
+                  !isOpen ? 'w-5' : ' w-7 -translate-y-1.5 -rotate-45',
                   'block h-1 origin-center rounded-full bg-slate-500 transition-all ease-in-out duration-300'
                 )}
               ></span>
@@ -162,7 +165,7 @@ function MobileMenu() {
                   className="z-10 flex flex-col items-center justify-center p-2 border-b-2 cursor-pointer"
                 >
                   <div>{item.Icon}</div>
-                  <p className="text-sm font-bold z-1">{item.text}</p>
+                  <p className="text-sm z-1">{item.text}</p>
                 </motion.div>
               ))}
               <motion.div
@@ -183,9 +186,38 @@ function MobileMenu() {
 }
 
 function NavMenu() {
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  let prev: number;
+
+  // logic we use to show/hide the navbar on scroll
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    if (prev > latest) {
+      setHidden(false);
+    }
+    if (prev < latest) {
+      setHidden(true);
+    }
+    prev = latest;
+  });
+
+  const variants = {
+    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: -25 }
+  };
+
   return (
     <Fragment>
-      <div className="fixed block w-full">{navbar}</div>
+      <motion.div
+        variants={variants}
+        animate={hidden ? 'hidden' : 'visible'}
+        transition={{ ease: [0.1, 0.25, 0.3, 1], duration: 0.6 }}
+        className="w-full"
+      >
+        <Navbar />
+      </motion.div>
       <div className="sm:hidden">
         <MobileMenu />
       </div>
