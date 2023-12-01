@@ -24,7 +24,7 @@ export const navMaxWidth = 'max-w-2xl mx-auto';
 
 const LINKS: INavItem[] = [
   { text: 'Home', href: '/', id: 0, Icon: <HomeIcon /> },
-  { text: 'Blog', href: '/blog', id: 1, Icon: <BlogIcon /> },
+  { text: 'Writing', href: '/writing', id: 1, Icon: <BlogIcon /> },
   { text: 'Projects', href: '/projects', id: 2, Icon: <BuildIcon /> },
   { text: 'About', href: '/about', id: 3, Icon: <UserIcon /> }
 ];
