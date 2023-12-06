@@ -15,12 +15,9 @@ export function NavItem({ link }: { link: INavItem }) {
       <Link
         key={link.id}
         href={link.href}
-        className={clsx(
-          'hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle',
-          {
-            'font-medium': isActive
-          }
-        )}
+        className={clsx('text-hover-primary flex align-middle', {
+          'font-medium': isActive
+        })}
       >
         <span className="relative py-[5px] px-[10px]">
           {link.text}
