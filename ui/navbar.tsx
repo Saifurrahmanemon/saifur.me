@@ -11,7 +11,7 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
-import { BlogIcon, HomeIcon, LatterLogo, ProjectIcon, UserIcon } from './icons';
+import { BlogIcon, HomeIcon, LetterLogo, ProjectIcon, UserIcon } from './icons';
 import { NavItem } from './nav-item';
 import ThemeSwitch from './theme-switch';
 
@@ -59,7 +59,7 @@ function Navbar() {
         <div className="max-w-5xl px-4 mx-auto">
           <div className="flex items-center justify-end h-16">
             <div>
-              <LatterLogo />
+              <LetterLogo />
             </div>
             <div className="w-full">{navItems}</div>
 
@@ -79,7 +79,7 @@ function MobileMenu() {
     <div>
       <div>
         <div className="fixed flex items-center justify-between w-full px-4 py-4">
-          <LatterLogo h="2rem" />
+          <LetterLogo h="2rem" />
           <ThemeSwitch />
         </div>
       </div>
