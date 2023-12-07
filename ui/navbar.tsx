@@ -76,27 +76,35 @@ function Navbar() {
 function MobileMenu() {
   const pathname = usePathname();
   return (
-    <div className="z-[500] fixed bottom-0 w-full py-2 bg-gray-600 rounded-2xl background-drop  dark:border-gray-600 border-t">
-      <div className="flex items-center justify-around max-w-lg gap-2 px-5 mx-auto">
-        {LINKS.map((item) => (
-          <Link
-            href={item.href}
-            key={item.text}
-            className={clsx(
-              pathname === item.href ? 'text-primary' : 'text-secondary',
-              'flex flex-col items-center justify-center py-1 cursor-pointer'
-            )}
-          >
-            <div>{item.Icon}</div>
-            <p className="text-sm text-hover-primary">{item.text}</p>
-          </Link>
-        ))}
+    <div>
+      <div>
+        <div className="fixed flex items-center justify-between w-full px-4 py-4">
+          <LatterLogo h="2rem" />
+          <ThemeSwitch />
+        </div>
+      </div>
+      <div className="z-[500] fixed bottom-0 w-full py-2 bg-gray-600 rounded-2xl background-drop  dark:border-gray-600 border-t">
+        <div className="flex items-center justify-around max-w-lg gap-2 px-5 mx-auto">
+          {LINKS.map((item) => (
+            <Link
+              href={item.href}
+              key={item.text}
+              className={clsx(
+                pathname === item.href ? 'text-primary' : 'text-secondary',
+                'flex flex-col items-center justify-center py-1 cursor-pointer'
+              )}
+            >
+              <div>{item.Icon}</div>
+              <p className="text-sm text-hover-primary">{item.text}</p>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
-function NavMenu() {
+export default function NavMenu() {
   const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
 
@@ -136,5 +144,3 @@ function NavMenu() {
     </AnimatePresence>
   );
 }
-
-export default NavMenu;

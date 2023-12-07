@@ -51,7 +51,7 @@
   }
 
   .sm-content-pt {
-    @apply pt-20 sm:pt-1;
+    @apply pt-16 sm:pt-1;
   }
   .text-hover-primary {
     @apply hover:text-neutral-800 dark:hover:text-neutral-200;
