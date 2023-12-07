@@ -200,11 +200,11 @@ const pathVariants = {
   }
 };
 
-interface LatterLogoProps {
+interface LetterLogoProps {
   w?: number | string;
   h?: number | string;
 }
-export function LatterLogo({ w = '2.75rem', h = '2.75rem' }: LatterLogoProps) {
+export function LetterLogo({ w = '2.75rem', h = '2.75rem' }: LetterLogoProps) {
   return (
     <motion.svg
       xmlns="http://www.w3.org/2000/svg"
