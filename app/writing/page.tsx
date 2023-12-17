@@ -1,5 +1,5 @@
-'use client';
-
+import Link from 'next/link';
+import { getWritings } from '~/lib/writings';
 import Divider from '~/ui/divider';
 
 interface CardProps {
@@ -13,7 +13,7 @@ const Card = (props: CardProps) => {
   return (
     <div className="flex items-stretch justify-between w-full gap-2 px-3 py-2 transition-all rounded-lg cursor-pointer card-hover">
       <div className="relative flex flex-col ">
-        <span className="font-bold text-secondary">{title}</span>
+        <span className="text-primary text-semibold">{title}</span>
         {views && (
           <span className="text-xs text-gray-600 dark:text-gray-400">
             {views} Views
@@ -26,27 +26,28 @@ const Card = (props: CardProps) => {
   );
 };
 
-function WritingPage() {
-  const date = new Date().toLocaleDateString().toString();
+function WritingsPage() {
+  let allBlogs = getWritings();
 
   return (
     <>
       <main className="mx-4">
-        <section className="flex flex-col gap-4 pt-10 mx-auto">
-          {Array(20)
-            .fill(0)
-            .map((item) => (
+        <section className="flex flex-col gap-4 mx-auto mt-3">
+          {allBlogs.map((item, idx) => (
+            <Link key={`${item.slug}_${idx}`} href={`/writing/${item.slug}`}>
               <Card
-                key={item}
-                title="Lorem ipsum dolor sit amet"
+                title={item.metadata.title}
                 views="43,432,423"
-                date={date}
+                date={new Date(item.metadata.publishedAt)
+                  .toLocaleDateString()
+                  .toString()}
               />
-            ))}
+            </Link>
+          ))}
         </section>
       </main>
     </>
   );
 }
 
-export default WritingPage;
+export default WritingsPage;
