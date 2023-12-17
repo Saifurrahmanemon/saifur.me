@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
-import { Theme } from '~/utils/theme-providers';
+import { Theme } from 'utils/theme-providers';
 import { MoonIcon, SunIcon } from './icons';
 
 const ThemeSwitch = () => {

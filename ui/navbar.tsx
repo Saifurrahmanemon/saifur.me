@@ -21,7 +21,7 @@ export interface INavItem {
   id: number;
   Icon?: React.ReactNode;
 }
-export const navMaxWidth = 'max-w-2xl mx-auto';
+export const appMaxWidth = 'max-w-2xl mx-auto';
 
 const LINKS: INavItem[] = [
   { text: 'Home', href: '/', id: 0, Icon: <HomeIcon /> },
@@ -47,7 +47,7 @@ function Navbar() {
     <div
       className={clsx(
         'relative hidden max-w-2xl px-2 mx-auto my-3 sm:block',
-        navMaxWidth
+        appMaxWidth
       )}
     >
       <nav

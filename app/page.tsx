@@ -1,9 +1,8 @@
-import { navMaxWidth } from '~/ui/navbar';
 import HeroSection from './components/hero-section';
 
 const Page = () => {
   return (
-    <main className={navMaxWidth}>
+    <main>
       <HeroSection />
     </main>
   );
