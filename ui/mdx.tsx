@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image, { ImageProps } from 'next/image';
 import React from 'react';
@@ -11,8 +12,8 @@ type CodeProps = {
   children: string;
 } & React.HTMLProps<HTMLElement>;
 
-const Code: React.FC<CodeProps> = ({ children, ...props }: CodeProps) => {
-  let codeHTML: string = highlight(children);
+const Code: React.FC<CodeProps> = ({ children, ...props }) => {
+  const codeHTML: string = highlight(children);
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
 };
 
@@ -49,6 +50,7 @@ function slugify(str: string) {
 }
 
 function createHeading(level: number) {
+  // eslint-disable-next-line react/display-name
   return ({ children }: { children: string }) => {
     let slug = slugify(children);
     return React.createElement(
