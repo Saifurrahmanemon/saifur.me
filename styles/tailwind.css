@@ -56,4 +56,16 @@
   .text-hover-primary {
     @apply hover:text-neutral-800 dark:hover:text-neutral-200;
   }
+
+  .prose pre {
+    @apply overflow-x-auto bg-gray-200 border rounded-lg dark:bg-neutral-900 border-secondary;
+  }
+
+  .prose code {
+    @apply px-1 py-0.5 rounded-lg;
+  }
+
+  .prose code span {
+    @apply font-medium;
+  }
 }
