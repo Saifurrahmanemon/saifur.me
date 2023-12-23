@@ -1,5 +1,3 @@
-'use client';
-
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,7 +6,9 @@ import { INavItem } from './navbar';
 export function NavItem({ link }: { link: INavItem }) {
   const pathname = usePathname();
 
-  const isPathActive = pathname === link.href;
+  const isPathActive =
+    pathname === link.href ||
+    (link.href.length > 1 && pathname.startsWith(link.href));
 
   return (
     <>
