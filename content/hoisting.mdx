@@ -1,0 +1,199 @@
+---
+title: 'JavaScript Hoisting: Understanding Its Basics and Implications'
+publishedAt: '2020-11-19'
+summary: 'Explore JavaScript hoisting: grasp its fundamentals, delve into implications, and gain insights into this crucial programming concept's workings.'
+---
+
+The concept of hoisting in JavaScript often serves as a perplexing subject,
+stirring confusion among developers due to its nuanced behavior. So, get
+yourself settled, popcorn in hand, as we embark on an enlightening journey to
+unravel the intricate layers of hoisting in JavaScript.
+
+### What is Hoisting?
+
+---
+
+Hoisting signifies the interpreter treating variable, function, and class
+declarations as if they're moved to the top of their scope before code
+execution. Although, during compilation phase, the declarations are actually
+added to memory (more on this soon!).
+
+#### Why is hoisting even relevant?
+
+One of the benefits of hoisting is that it allows functions to be safely used in
+code before they are declared. Sounds fun right? However, using functions before
+the declaration is not generally recommended because doing so can lead to
+unexpected errors.
+
+```js
+iAmBehindYou(); // I am behind you...🕺
+
+function iAmBehindYou() {
+  console.log('I am behind you...🕺');
+}
+```
+
+Before diving deep into hoisting, let's familiarize ourselves with some
+important concepts.
+
+### JavaScript Context Execution
+
+---
+
+We will briefly discuss _*JavaScript Context Execution*_, as it aids in a better
+understanding of hoisting.
+
+When the browser engine encounters JavaScript code, it creates a special
+environment to handle the transformation and execution of the code. This
+environment is known as the _*Execution Context*_.
+
+The creation of an Execution Context (GEC or FEC) unfolds in two distinct
+phases: <br/>
+
+1. Creation Phase <br/>
+2. Execution Phase
+
+**Creation Phase** <br/> During this phase, JS engine execute the following
+tasks:
+
+- Creation of the Variable Object (VO or Global Object)
+- Creation of the Scope Chain
+- Setting the value of the 'this' keyword
+- Memory allocation for storing variables and function references
+- Storing declarations in memory within the global execution context with an
+  'undefined' initial value (crucial!!)
+
+**Execution Phase** <br/>
+
+- Variables are assigned with values.
+- Functions get executed.
+
+It's important to note that for every function call, the JS engine creates a new
+Function Execution Context. This context is similar to the global execution
+context, but creates the arguments object that contains references to all the
+parameters passed to the function.
+
+### Initialization and declaration
+
+---
+
+Alright, let's dive into how variables hoisting works by breaking down some
+basics:
+
+**Declaration**: Involves registering a variable with a designated name within
+its scope, such as inside a function.
+
+**Initialization**: When you declare a variable it is automatically initialized,
+which means memory is allocated for the variable by the JavaScript engine. It's
+as if the JS engine preps a space for it in memory. Imagine it's like reserving
+a seat at the table and leaving it empty for now. In JavaScript, this usually
+means giving it an 'undefined' value until something else is assigned.
+
+**Assignment**: Now, this is when the action happens! It's like finally putting
+something on that previously empty seat. This is where you give your variable a
+real value after it's been set up.
+
+<Image
+  src="/images/hoisting/declaration&Initialization.png"
+  alt="Declaration and Initialization"
+  width={980}
+  height={400}
+/>
+
+### Variables Hosting
+
+---
+
+In JavaScript, all variables are hoisted and initialized by default with an
+'undefined' value, regardless of the actual assigned value. This means you can
+technically access them before declaration, but they'll return 'undefined':
+
+```javascript
+console.log(iAmVariable); // undefined
+
+var iAmVariable = 'look up☝️';
+```
+
+However, this behavior is exclusive to the 'var' keyword. If you attempt to
+access variables declared using 'let' or 'const' before their declaration, it
+triggers a ReferenceError due to the Temporal Dead Zone (TDZ):
+
+```javascript
+console.log(iAmInsideTDZ); // Cannot access 'iAmInsideTDZ' before initialization.
+const iAmInsideTDZ = 'look up☝️';
+```
+
+**What is the Temporal dead zone?** <br/> The Temporal Dead Zone denotes the
+duration during which 'let' and 'const' declarations cannot be accessed.
+
+### Functions Hoisting
+
+---
+
+As previously mentioned, hoisting allows safe access and use of functions before
+their declaration in code:
+
+```javascript
+youCanCatchMe(); // wow!! You caught me....
+
+function youCanCatchMe() {
+  console.log('wow!! You caught me....');
+}
+```
+
+This occurs because during the Creation phase, JavaScript treats the function
+declaration as an initial value. Contrary to popular belief, it doesn’t
+physically move the declaration to the top. Instead, the entire function is kept
+as an initial value during this phase.
+
+```javascript
+console.log(callMe); /*
+                     ƒ callMe() {
+                        console.log('What do you see??');
+                     }
+                     */
+
+function callMe() {
+  console.log('What do you see??');
+}
+```
+
+<Image
+alt='call function before declaration'
+src='/images/hoisting/functionInvoke.png'
+width={980}
+height={400}
+
+/>
+
+<br />
+
+Can you guess what would happen if we try to access functions with expressions?
+
+<br /> Yes, you guessed it right.
+
+- For var, it will keep undefined and you will get an Error if you try invoke
+  function with a value undefined.
+- For let and const will result in a reference Error.
+
+### Class Hoisting
+
+---
+
+Similar to functions, class declarations undergo hoisting. However, a pivotal
+distinction lies between function and class declarations: functions can be
+invoked before their definition, whereas classes necessitate definition before
+instantiation. Attempting to construct a class before its declaration will
+result in a ReferenceError being thrown.
+
+```javascript
+const bigBoy = new BigBoy(); // Cannot access 'BigBoy' before initialization
+
+class BigBoy {}
+```
+
+<div align="center">
+
+![end-thats-all-folks](https://user-images.githubusercontent.com/70877552/195329949-3e259d47-3709-4777-9bab-e9bda5c2fa9f.gif)
+
+</div>
