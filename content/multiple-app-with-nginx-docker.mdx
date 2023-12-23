@@ -1,0 +1,176 @@
+---
+title: 'Running Multiple Apps on Localhost using  Nginx and Docker'
+publishedAt: '2022-01-10'
+summary:
+  'The seamless orchestration of multiple applications on a shared localhost
+  port using Nginx and Docker.'
+---
+
+In the realm of web development, there are scenarios where you might need to run
+multiple frontend applications simultaneously on the same localhost port. This
+situation often arises during development or testing phases. Thankfully, with
+the help of Nginx, a powerful web server, this can be achieved seamlessly. Nginx
+acts as a reverse proxy, enabling us to manage multiple frontend apps
+efficiently.
+
+### Prerequisites
+
+Before diving into the setup, ensure that you have the following installed on
+your machine:
+
+- Nginx web server
+- Docker
+- Node
+
+## Steps:
+
+### 1. Project Setup
+
+Organize your project structure:
+
+```
+project_folder/
+│
+├── app1/
+│ ├── Dockerfile
+│ └── ... (App 1 files)
+│
+├── app2/
+│ ├── Dockerfile
+│ └── ... (App 2 files)
+│
+└── nginx/
+└── nginx.conf
+```
+
+### 2. Dockerize Frontend Apps
+
+Create Dockerfiles for each app (`app1` and `app2`) to define their containers.
+
+Example Dockerfile for `app1`:
+
+```Dockerfile
+# Use a base image suitable for your frontend app (e.g., Node.js)
+FROM public.ecr.aws/bitnami/node:16.20.0
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json (if applicable)
+COPY package.json package.json
+
+# Copy package-lock.json (if applicable)
+COPY package-lock.json package-lock.json
+
+# Install dependencies
+RUN npm i
+
+# Copy the rest of the app files
+COPY . .
+
+# Build the app
+RUN npm run build
+
+# Expose the port
+EXPOSE 3052
+
+# Set the command to start the app
+CMD ["npm" ,"start"]
+
+```
+
+### 3. Configure Nginx
+
+Create an `nginx.conf` file inside the `nginx` directory to configure Nginx as a
+reverse proxy to route traffic to app.
+
+Example `nginx.conf`:
+
+```nginx
+
+server {
+    listen       80;
+    listen  [::]:80;
+    server_name  localhost;
+
+    #access_log  /var/log/nginx/host.access.log  main;
+
+
+    location /app1 {
+       proxy_pass http://app1:3000; # Change the port to match your app's port
+    }
+    location /app2 {
+         proxy_pass http://app2:4000; # Change the port to match your app's port
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+}
+
+```
+
+### 4. Docker Compose Configuration
+
+Create a `docker-compose.yml` file in the root directory of your project to
+define and manage the services for Nginx and the frontend apps.
+
+Example `docker-compose.yml`:
+
+```Dockerfile
+
+version: '3'
+
+services:
+  app1:
+    build: ./app1
+    container_name: app1
+    ports:
+      - "3000"
+
+  app2:
+    build: ./app2
+    container_name: app2
+    ports:
+      - "4000"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - app1
+      - app2
+
+```
+
+### 5. Run the Applications
+
+Navigate to your project folder in the terminal and execute the following
+command to start the containers:
+
+```docker
+sudo docker compose up
+```
+
+### 6. Access Apps
+
+You can access your frontend applications via the specified paths:
+
+- Application 1: http://localhost/app1
+- Application 2: http://localhost/app2
+
+Voila! You've now successfully configured Docker Compose with Nginx to run
+multiple frontend applications on the same localhost port, allowing you to
+manage and test various applications conveniently during development.
+
+<br />
