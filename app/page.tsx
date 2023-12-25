@@ -1,37 +1,86 @@
 /* eslint-disable react/no-unescaped-entities */
+import Link from 'next/link';
+import { getSortedWritings } from '~/lib/writings';
 import HeroSection from './components/hero-section';
+import { formatDate } from './writing/[slug]/page';
+
+const ReachMe = () => {
+  return (
+    <section className="mt-20 text-sm text-secondary">
+      <p>
+        Reach me at:{' '}
+        <em className="underline cursor-pointer">
+          <a href="mailto: saifemon789@gmail.com">saifemon@gmail.com</a>
+        </em>
+      </p>
+    </section>
+  );
+};
+
+const About = () => {
+  return (
+    <section>
+      <p className="my-3 text-secondary">
+        Developer with a fervent passion for crafting exceptional digital{' '}
+        <em>Web-based Products</em>. My journey in the world of software
+        development has been nothing short of exhilarating. I thrive on the
+        challenge of transforming innovative ideas into functional and{' '}
+        user-friendly solutions that make a real difference. Whether it's
+        crafting elegant algorithms or designing intuitive user interfaces, I
+        relish every moment of the creative process.
+      </p>
+
+      <p className="my-3 text-secondary">
+        I firmly believe that the best results are achieved when diverse talents
+        come together to tackle complex problems.
+      </p>
+
+      <p className="my-3 text-secondary">
+        When I'm not immersed in lines of code, you'll often find me lost in the
+        world of literature, flipping through the pages of captivating{' '}
+        <em>Books</em>, or embracing the exhilarating freedom of the open road
+        as I ride my bike.Feeling the wind rush past and taking in the sights
+        around me. Whether it's a leisurely ride through scenic paths or
+        exploring new routes, <em>Riding</em> gives me a sense of freedom and
+        allows me to disconnect and recharge.
+      </p>
+    </section>
+  );
+};
+
+const RecentWritings = () => {
+  const writings = getSortedWritings();
+  return (
+    <section className="text-secondary">
+      <p className="mt-10 font-mono text-sm font-extralight">
+        Recent Writings:{' '}
+      </p>
+      {writings?.slice(0, 2)?.map((writing, idx) => {
+        const formattedDate = formatDate(writing.metadata.publishedAt);
+
+        return (
+          <div key={idx} className="py-3 ">
+            <Link
+              className="text-sm hover:underline text-primary"
+              href={`/writing/${writing.slug}`}
+            >
+              {writing.metadata.title}
+            </Link>
+            <p className="text-xs text-secondary">{formattedDate}</p>
+          </div>
+        );
+      })}
+    </section>
+  );
+};
 
 const Page = () => {
   return (
     <main className="mx-4">
       <HeroSection />
-      <section>
-        <p className="my-3 text-secondary">
-          Software developer with a fervent passion for{' '}
-          <em>crafting exceptional</em> digital products.My journey in the world
-          of software development has been nothing short of exhilarating. I
-          thrive on the challenge of transforming innovative ideas into
-          functional and user-friendly solutions that make a real difference.
-          Whether it's crafting elegant algorithms or designing intuitive user
-          interfaces, I relish every moment of the creative process.
-        </p>
-
-        <p className="my-3 text-secondary">
-          My coding adventures have not only honed my technical skills but also
-          instilled in me a deep appreciation for collaboration and teamwork. I
-          firmly believe that the best results are achieved when diverse talents
-          come together to tackle complex problems. My ability to communicate
-          and work harmoniously within a team is something I take immense pride
-          in.
-        </p>
-
-        <p className="my-3 text-secondary">
-          When I'm not immersed in lines of code, you'll often find me lost in
-          the world of literature, flipping through the pages of captivating
-          books, or embracing the exhilarating freedom of the open road as I
-          ride my bike.
-        </p>
-      </section>
+      <About />
+      <RecentWritings />
+      <ReachMe />
     </main>
   );
 };

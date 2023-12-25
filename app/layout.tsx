@@ -1,22 +1,10 @@
-import { Inter, Sofia } from 'next/font/google';
 import React from 'react';
 import 'styles/globals.css';
 import 'styles/tailwind.css';
 import Footer from '~/ui/footer';
 import NavMenu from '~/ui/navbar';
+import { inter, newsreader } from './fonts';
 import Providers from './providers';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap'
-});
-
-const newsreader = Sofia({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: '400',
-  variable: '--font-newsreader'
-});
 
 export default function RootLayout({
   children
