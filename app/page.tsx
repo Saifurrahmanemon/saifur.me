@@ -6,7 +6,7 @@ import { formatDate } from './writing/[slug]/page';
 
 const ReachMe = () => {
   return (
-    <section className="mt-20 text-sm text-secondary">
+    <section className="mt-10 mb-10 text-sm md:mt-20 text-secondary">
       <p>
         Reach me at:{' '}
         <em className="underline cursor-pointer">
@@ -39,7 +39,7 @@ const About = () => {
         When I'm not immersed in lines of code, you'll often find me lost in the
         world of literature, flipping through the pages of captivating{' '}
         <em>Books</em>, or embracing the exhilarating freedom of the open road
-        as I ride my bike.Feeling the wind rush past and taking in the sights
+        as I ride my bike. Feeling the wind rush past and taking in the sights
         around me. Whether it's a leisurely ride through scenic paths or
         exploring new routes, <em>Riding</em> gives me a sense of freedom and
         allows me to disconnect and recharge.
@@ -50,18 +50,21 @@ const About = () => {
 
 const RecentWritings = () => {
   const writings = getSortedWritings();
+
+  if (writings.length === 0) {
+    return null;
+  }
+
   return (
     <section className="text-secondary">
-      <p className="mt-10 font-mono text-sm font-extralight">
-        Recent Writings:{' '}
-      </p>
-      {writings?.slice(0, 2)?.map((writing, idx) => {
+      <p className="mt-10 font-mono font-extralight">Recent Writings: </p>
+      {writings.slice(0, 2).map((writing, idx) => {
         const formattedDate = formatDate(writing.metadata.publishedAt);
 
         return (
           <div key={idx} className="py-3 ">
             <Link
-              className="text-sm hover:underline text-primary"
+              className=" hover:underline text-primary"
               href={`/writing/${writing.slug}`}
             >
               {writing.metadata.title}
