@@ -21,7 +21,6 @@ export interface INavItem {
   id: number;
   Icon?: React.ReactNode;
 }
-export const appMaxWidth = 'max-w-2xl mx-auto';
 
 const LINKS: INavItem[] = [
   { text: 'Home', href: '/', id: 0, Icon: <HomeIcon /> },
@@ -44,12 +43,7 @@ const navItems = (
 
 function Navbar() {
   return (
-    <div
-      className={clsx(
-        'relative hidden max-w-2xl px-2 mx-auto my-3 sm:block',
-        appMaxWidth
-      )}
-    >
+    <div className="relative hidden px-2 my-3 sm:block app-max-w">
       <nav
         style={{
           transition: 'backdrop-filter 0.3s ease-out'
@@ -129,7 +123,7 @@ export default function NavMenu() {
 
   return (
     <AnimatePresence>
-      <motion.div
+      <motion.header
         layout
         variants={variants}
         animate={{ opacity: hidden ? 0 : 1 }}
@@ -137,10 +131,10 @@ export default function NavMenu() {
         className="w-full sm:hidden"
       >
         <MobileMenu />
-      </motion.div>
-      <div className="w-full">
+      </motion.header>
+      <header className="w-full">
         <Navbar />
-      </div>
+      </header>
     </AnimatePresence>
   );
 }
