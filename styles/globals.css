@@ -1,11 +1,12 @@
 :root {
   --max-width: 1200px;
-  --font-fallback: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-fallback: var(--font-inter), ui-monospace, Menlo, Monaco,
+    'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
+    'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono',
+    'Courier New', monospace;
   --font-display: 'Inter', var(--font-fallback);
   --font-ui: 'Inter', var(--font-fallback);
-  --font-sans: 'Sohne', var(--font-fallback);
+  --font-sans: 'Inter', var(--font-fallback);
 
   --sh-class: #2d5e9d;
   --sh-sign: #8996a3;
@@ -42,7 +43,4 @@ a {
 
 em {
   font-family: var(--font-newsreader);
-  font-feature-settings: normal;
-  -webkit-font-feature-settings: normal;
-  -moz-font-feature-settings: normal;
 }

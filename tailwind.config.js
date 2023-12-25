@@ -1,4 +1,3 @@
-const { fontFamily } = require('tailwindcss/defaultTheme');
 const defaultTheme = require('tailwindcss/defaultTheme');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -38,14 +37,6 @@ module.exports = {
           800: '#222222',
           900: '#111111'
         }
-      },
-      backgroundImage: ({ theme }) => ({
-        'vc-border-gradient': `radial-gradient(at left top, ${theme(
-          'colors.gray.500'
-        )}, 50px, ${theme('colors.gray.800')} 50%)`
-      }),
-      fontFamily: {
-        sans: ['Inter', ...fontFamily.sans]
       }
     }
   },
