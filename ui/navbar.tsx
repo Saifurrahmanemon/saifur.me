@@ -11,7 +11,7 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
-import { BlogIcon, HomeIcon, LetterLogo, ProjectIcon, UserIcon } from './icons';
+import { BlogIcon, HomeIcon, LetterLogo, UserIcon } from './icons';
 import { NavItem } from './nav-item';
 import ThemeSwitch from './theme-switch';
 
@@ -25,8 +25,9 @@ export interface INavItem {
 const LINKS: INavItem[] = [
   { text: 'Home', href: '/', id: 0, Icon: <HomeIcon /> },
   { text: 'Writing', href: '/writing', id: 1, Icon: <BlogIcon /> },
-  { text: 'Projects', href: '/projects', id: 2, Icon: <ProjectIcon /> },
-  { text: 'About', href: '/about', id: 3, Icon: <UserIcon /> }
+  { text: 'Journey', href: '/journey', id: 1, Icon: <UserIcon /> }
+  // { text: 'Projects', href: '/projects', id: 2, Icon: <ProjectIcon /> },
+  // { text: 'About', href: '/about', id: 3, Icon: <UserIcon /> }
 ];
 
 const navItems = (
