@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 @layer utilities {
+  .app-max-w {
+    @apply max-w-2xl mx-auto;
+  }
   .app-container {
-    @apply mx-auto max-w-7xl;
+    @apply max-w-2xl mx-auto;
   }
   .bg-primary {
     @apply bg-white dark:bg-gray-900;

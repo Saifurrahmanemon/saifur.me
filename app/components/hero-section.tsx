@@ -8,7 +8,7 @@ const linkedInLink = 'https://linkedin.com/in/saifurrahmanemon';
 
 function HeroSection() {
   return (
-    <section className="mx-4">
+    <section className="">
       <div className="flex items-center gap-1 my-4 sm:gap-4">
         <div className="flex flex-col">
           <h1 className="font-mono text-lg">{name}</h1>

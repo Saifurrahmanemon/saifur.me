@@ -1,8 +1,22 @@
+import { Inter, Sofia } from 'next/font/google';
 import React from 'react';
 import 'styles/globals.css';
 import 'styles/tailwind.css';
-import NavMenu, { appMaxWidth } from '~/ui/navbar';
+import Footer from '~/ui/footer';
+import NavMenu from '~/ui/navbar';
 import Providers from './providers';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap'
+});
+
+const newsreader = Sofia({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: '400',
+  variable: '--font-newsreader'
+});
 
 export default function RootLayout({
   children
@@ -10,14 +24,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html
+      className={`${inter.className} ${newsreader.variable}`}
+      lang="en"
+      suppressHydrationWarning
+    >
       <head />
       <body>
         <Providers>
           <NavMenu />
-          <div className="app-container sm-content-pt">
-            <main className={appMaxWidth}>{children}</main>
-          </div>
+          <main className="relative app-container sm-content-pt min-h-[calc(100vh-130px)]">
+            <div className="app-max-w">{children}</div>
+          </main>
+          <Footer />
         </Providers>
       </body>
     </html>
