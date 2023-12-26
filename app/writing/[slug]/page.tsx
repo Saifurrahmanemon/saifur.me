@@ -1,5 +1,8 @@
+import { Redis } from '@upstash/redis';
 import { getWritings } from '~/lib/writings';
 import { CustomMDXRemote } from '~/ui/mdx';
+import { formatDate } from '~/utils/index';
+import { ReportView } from './view';
 
 type Props = {
   params: {
@@ -7,16 +10,20 @@ type Props = {
   };
 };
 
-export const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
+const redis = Redis.fromEnv();
+
+export const getViewsCount = async (slug: string) => {
+  const data =
+    (await redis.get<number>(['pageviews', 'projects', slug].join(':'))) ?? 0;
+
+  return data;
 };
 
-export default function WritingPage({ params }: Props) {
+export const revalidate = 60;
+
+export default async function WritingPage({ params }: Props) {
   const writing = getWritings().find((item) => item.slug === params.slug);
+  const viewsCount = await getViewsCount(params.slug);
 
   if (!writing) {
     return (
@@ -32,6 +39,8 @@ export default function WritingPage({ params }: Props) {
 
   return (
     <main className="mx-4 mt-3">
+      <p className="text-secondary">Views: {viewsCount}</p>
+      <ReportView slug={params.slug} />
       <section className="mb-10">
         <h1 className="pb-2 text-xl font-semibold border-b md:text-2xl text-primary border-secondary">
           {writing.metadata.title}
