@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from 'next/link';
 import { getSortedWritings } from '~/lib/writings';
+import { formatDate } from '../utils';
 import HeroSection from './components/hero-section';
-import { formatDate } from './writing/[slug]/page';
 
 const ReachMe = () => {
   return (
@@ -57,22 +57,20 @@ const RecentWritings = () => {
 
   return (
     <section className="text-secondary">
-      <p className="mt-10 font-mono font-extralight">Recent Writings: </p>
-      {writings.slice(0, 2).map((writing, idx) => {
-        const formattedDate = formatDate(writing.metadata.publishedAt);
-
-        return (
-          <div key={idx} className="py-3 ">
-            <Link
-              className=" hover:underline text-primary"
-              href={`/writing/${writing.slug}`}
-            >
-              {writing.metadata.title}
-            </Link>
-            <p className="text-xs text-secondary">{formattedDate}</p>
-          </div>
-        );
-      })}
+      <p className="mt-10 ">Recent Writings: </p>
+      {writings.slice(0, 2).map((writing, idx) => (
+        <div key={idx} className="py-3 ">
+          <Link
+            className=" hover:underline text-primary"
+            href={`/writing/${writing.slug}`}
+          >
+            {writing.metadata.title}
+          </Link>
+          <p className="text-xs text-secondary">
+            {formatDate(writing.metadata.publishedAt)}
+          </p>
+        </div>
+      ))}
     </section>
   );
 };
