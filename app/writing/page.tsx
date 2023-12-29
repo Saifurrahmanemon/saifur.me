@@ -1,24 +1,63 @@
+import { Redis } from '@upstash/redis';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { getSortedWritings } from '~/lib/writings';
 import Divider from '~/ui/divider';
+
+const redis = Redis.fromEnv();
 
 interface CardProps {
   title: string;
   date: string;
   views?: string;
+  slug: string;
+}
+
+function formatToCompactNumber(
+  itemSlug: string,
+  list: Record<string, number>
+): string {
+  const numberToFormat = list[itemSlug] ?? 0;
+  const formattedNumber = new Intl.NumberFormat('en-US', {
+    notation: 'compact'
+  }).format(numberToFormat);
+
+  return formattedNumber;
+}
+
+async function getAllWritingsViews(
+  writings: { slug: string }[] | undefined
+): Promise<Record<string, number>> {
+  const viewsArray = await redis.mget<number[]>(
+    writings?.map((w) => ['pageviews', 'projects', w.slug].join(':')) || []
+  );
+
+  const allWritingsViews = viewsArray.reduce(
+    (acc, v, i) => {
+      const currentSlug = writings?.[i]?.slug;
+      if (currentSlug) {
+        acc[currentSlug] = v ?? 0;
+      }
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
+  return allWritingsViews;
 }
 
 export const Card = (props: CardProps) => {
   const { title, date, views } = props;
+  // const viewsCount = getViewsCount(slug);
   return (
     <div className="flex items-stretch justify-between w-full gap-2 px-3 py-3 transition-all rounded-lg cursor-pointer card-hover">
       <div className="relative flex flex-col ">
         <span className="text-sm text-primary">{title}</span>
-        {views && (
+        <Suspense fallback={<p className="h-2"></p>}>
           <span className="text-xs text-gray-600 dark:text-gray-400">
             {views} Views
           </span>
-        )}
+        </Suspense>
       </div>
       <Divider />
       <span className="text-xs sm:text-sm text-secondary">{date}</span>
@@ -26,7 +65,9 @@ export const Card = (props: CardProps) => {
   );
 };
 
-function WritingsPage() {
+export const revalidate = 60;
+
+async function WritingsPage() {
   let writings = getSortedWritings();
 
   if (writings.length === 0) {
@@ -36,6 +77,8 @@ function WritingsPage() {
       </p>
     );
   }
+  const allWritingsViews = await getAllWritingsViews(writings);
+
   return (
     <>
       <main className="mx-4">
@@ -43,6 +86,8 @@ function WritingsPage() {
           {writings.map((item, idx) => (
             <Link key={`${item.slug}_${idx}`} href={`/writing/${item.slug}`}>
               <Card
+                views={formatToCompactNumber(item.slug, allWritingsViews)}
+                slug={item.slug}
                 title={item.metadata.title}
                 date={new Date(item.metadata.publishedAt)
                   .toLocaleDateString()

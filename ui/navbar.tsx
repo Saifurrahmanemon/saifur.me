@@ -25,9 +25,9 @@ export interface INavItem {
 const LINKS: INavItem[] = [
   { text: 'Home', href: '/', id: 0, Icon: <HomeIcon /> },
   { text: 'Writing', href: '/writing', id: 1, Icon: <BlogIcon /> },
-  { text: 'Journey', href: '/journey', id: 1, Icon: <UserIcon /> }
-  // { text: 'Projects', href: '/projects', id: 2, Icon: <ProjectIcon /> },
-  // { text: 'About', href: '/about', id: 3, Icon: <UserIcon /> }
+  { text: 'Journey', href: '/journey', id: 2, Icon: <UserIcon /> }
+  // { text: 'Projects', href: '/projects', id: 3, Icon: <ProjectIcon /> },
+  // { text: 'About', href: '/about', id: 4, Icon: <UserIcon /> }
 ];
 
 const navItems = (
@@ -35,7 +35,7 @@ const navItems = (
     <LayoutGroup id="nav">
       <div className="flex flex-row p-2 space-x-0 md:mt-0">
         {LINKS.map((link) => (
-          <NavItem key={link.id} link={link} />
+          <NavItem key={link.text} link={link} />
         ))}
       </div>
     </LayoutGroup>
@@ -83,7 +83,7 @@ function MobileMenu() {
           {LINKS.map((item) => (
             <Link
               href={item.href}
-              key={item.text}
+              key={`${item.text}_mobile`}
               className={clsx(
                 pathname === item.href ? 'text-primary' : 'text-secondary',
                 'flex flex-col items-center justify-center py-1 cursor-pointer'
@@ -123,19 +123,21 @@ export default function NavMenu() {
   };
 
   return (
-    <AnimatePresence>
-      <motion.header
-        layout
-        variants={variants}
-        animate={{ opacity: hidden ? 0 : 1 }}
-        transition={{ duration: 0.3 }}
-        className="w-full sm:hidden"
-      >
-        <MobileMenu />
-      </motion.header>
+    <>
+      <AnimatePresence>
+        <motion.header
+          layout
+          variants={variants}
+          animate={{ opacity: hidden ? 0 : 1 }}
+          transition={{ duration: 0.3 }}
+          className="w-full sm:hidden"
+        >
+          <MobileMenu />
+        </motion.header>
+      </AnimatePresence>
       <header className="w-full">
         <Navbar />
       </header>
-    </AnimatePresence>
+    </>
   );
 }

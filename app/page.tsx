@@ -52,7 +52,7 @@ const RecentWritings = () => {
   const writings = getSortedWritings();
 
   if (writings.length === 0) {
-    return null;
+    return <p className="text-primary">No Writings Found</p>;
   }
 
   return (
@@ -61,7 +61,7 @@ const RecentWritings = () => {
       {writings.slice(0, 2).map((writing, idx) => (
         <div key={idx} className="py-3 ">
           <Link
-            className=" hover:underline text-primary"
+            className="hover:underline text-primary"
             href={`/writing/${writing.slug}`}
           >
             {writing.metadata.title}
