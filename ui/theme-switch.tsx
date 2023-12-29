@@ -29,7 +29,7 @@ const ThemeSwitch = () => {
         className="flex items-center justify-center transition-all bg-gray-200 rounded-lg w-9 h-9 dark:bg-gray-600 hover:ring-1 ring-gray-300"
         onClick={handleToggleTheme}
       >
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           <motion.div
             key={theme === Theme.Dark ? 'moon' : 'sun'}
             transition={{ duration: 0.7, delay: 0.4 }}
