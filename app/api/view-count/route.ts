@@ -41,7 +41,6 @@ export async function POST(req: NextRequest) {
       return new NextResponse('Already viewed', { status: 202 });
     }
   }
-
   await redis.incr(['pageviews', 'projects', slug].join(':'));
   return new NextResponse(null, { status: 202 });
 }

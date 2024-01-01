@@ -1,8 +1,10 @@
 import { Redis } from '@upstash/redis';
+import { unstable_noStore as noStore } from 'next/cache';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { getSortedWritings } from '~/lib/writings';
 import Divider from '~/ui/divider';
+import { formatDate } from '~/utils/index';
 
 const redis = Redis.fromEnv();
 
@@ -13,21 +15,25 @@ interface CardProps {
   slug: string;
 }
 
-function formatToCompactNumber(
+export function formatNumber(
   itemSlug: string,
-  list: Record<string, number>
+  list: Record<string, number>,
+  options?: {
+    notation?: 'standard' | 'compact' | 'scientific' | 'engineering';
+  }
 ): string {
   const numberToFormat = list[itemSlug] ?? 0;
   const formattedNumber = new Intl.NumberFormat('en-US', {
-    notation: 'compact'
+    notation: options?.notation ?? 'standard'
   }).format(numberToFormat);
 
   return formattedNumber;
 }
 
-async function getAllWritingsViews(
+export async function getAllWritingsViews(
   writings: { slug: string }[] | undefined
 ): Promise<Record<string, number>> {
+  noStore();
   const viewsArray = await redis.mget<number[]>(
     writings?.map((w) => ['pageviews', 'projects', w.slug].join(':')) || []
   );
@@ -48,14 +54,13 @@ async function getAllWritingsViews(
 
 export const Card = (props: CardProps) => {
   const { title, date, views } = props;
-  // const viewsCount = getViewsCount(slug);
   return (
-    <div className="flex items-stretch justify-between w-full gap-2 px-3 py-3 transition-all rounded-lg cursor-pointer card-hover">
+    <div className="flex items-stretch justify-between w-full gap-2 px-3 py-2 transition-all rounded-lg cursor-pointer card-hover">
       <div className="relative flex flex-col ">
         <span className="text-sm text-primary">{title}</span>
         <Suspense fallback={<p className="h-2"></p>}>
           <span className="text-xs text-gray-600 dark:text-gray-400">
-            {views} Views
+            {views} views
           </span>
         </Suspense>
       </div>
@@ -86,12 +91,12 @@ async function WritingsPage() {
           {writings.map((item, idx) => (
             <Link key={`${item.slug}_${idx}`} href={`/writing/${item.slug}`}>
               <Card
-                views={formatToCompactNumber(item.slug, allWritingsViews)}
+                views={formatNumber(item.slug, allWritingsViews, {
+                  notation: 'compact'
+                })}
                 slug={item.slug}
                 title={item.metadata.title}
-                date={new Date(item.metadata.publishedAt)
-                  .toLocaleDateString()
-                  .toString()}
+                date={formatDate(item.metadata.publishedAt, { month: 'short' })}
               />
             </Link>
           ))}

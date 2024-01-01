@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { getSortedWritings } from '~/lib/writings';
 import { formatDate } from '../utils';
 import HeroSection from './components/hero-section';
+import { EyeIcon } from './writing/[slug]/page';
+import { formatNumber, getAllWritingsViews } from './writing/page';
 
 const ReachMe = () => {
   return (
@@ -48,28 +50,39 @@ const About = () => {
   );
 };
 
-const RecentWritings = () => {
-  const writings = getSortedWritings();
+const RecentWritings = async () => {
+  const recent = getSortedWritings()?.slice(0, 2);
 
-  if (writings.length === 0) {
+  if (recent.length === 0) {
     return <p className="text-primary">No Writings Found</p>;
   }
 
+  const getViews = await getAllWritingsViews(recent);
+
   return (
     <section className="text-secondary">
-      <p className="mt-10 ">Recent Writings: </p>
-      {writings.slice(0, 2).map((writing, idx) => (
-        <div key={idx} className="py-3 ">
-          <Link
-            className="hover:underline text-primary"
-            href={`/writing/${writing.slug}`}
-          >
-            {writing.metadata.title}
-          </Link>
-          <p className="text-xs text-secondary">
-            {formatDate(writing.metadata.publishedAt)}
-          </p>
-        </div>
+      <p className="mt-10 mb-1">Recent Writings </p>
+      {recent.map((writing) => (
+        <Link href={`/writing/${writing.slug}`} key={writing.slug}>
+          <div className="px-2 py-3 transition-all rounded-lg cursor-pointer hover:bg-primary">
+            <span className="text-primary text-underline-gradient ">
+              {writing.metadata.title}
+            </span>
+            <div className=""></div>
+            <div className="flex items-center justify-start gap-2 text-xs text-secondary">
+              <span className="flex items-center gap-1">
+                {formatDate(writing.metadata.publishedAt)}
+              </span>
+              <span className="flex items-end gap-1">
+                <EyeIcon />{' '}
+                {formatNumber(writing.slug, getViews, {
+                  notation: 'compact'
+                })}{' '}
+                views
+              </span>
+            </div>
+          </div>
+        </Link>
       ))}
     </section>
   );
