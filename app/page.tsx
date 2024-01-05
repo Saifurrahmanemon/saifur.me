@@ -65,7 +65,7 @@ const RecentWritings = async () => {
       {recent.map((writing) => (
         <Link href={`/writing/${writing.slug}`} key={writing.slug}>
           <div className="px-2 py-3 transition-all rounded-lg cursor-pointer hover:bg-primary">
-            <span className="text-primary text-underline-gradient ">
+            <span className="text-primary text-underline-gradient">
               {writing.metadata.title}
             </span>
             <div className=""></div>

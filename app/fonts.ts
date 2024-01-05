@@ -5,9 +5,9 @@ export const inter = Inter({
   display: 'swap'
 });
 
-export const newsreader = Sofia({
+export const sofia = Sofia({
   subsets: ['latin'],
   display: 'swap',
   weight: '400',
-  variable: '--font-newsreader'
+  variable: '--font-sofia'
 });

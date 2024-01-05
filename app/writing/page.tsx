@@ -3,8 +3,8 @@ import { unstable_noStore as noStore } from 'next/cache';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { getSortedWritings } from '~/lib/writings';
-import Divider from '~/ui/divider';
 import { formatDate } from '~/utils/index';
+import { EyeIcon } from './[slug]/page';
 
 const redis = Redis.fromEnv();
 
@@ -55,17 +55,20 @@ export async function getAllWritingsViews(
 export const Card = (props: CardProps) => {
   const { title, date, views } = props;
   return (
-    <div className="flex items-stretch justify-between w-full gap-2 px-3 py-2 transition-all rounded-lg cursor-pointer card-hover">
+    <div className="flex items-stretch justify-between w-full gap-2 px-3 py-2 transition-all rounded-lg cursor-pointer card-hover ">
       <div className="relative flex flex-col ">
-        <span className="text-sm text-primary">{title}</span>
-        <Suspense fallback={<p className="h-2"></p>}>
-          <span className="text-xs text-gray-600 dark:text-gray-400">
-            {views} views
-          </span>
-        </Suspense>
+        <span className="text-base text-primary">{title}</span>
+        <div className="flex items-center justify-start gap-2 mt-0.5 text-xs text-secondary sm:mt-auto">
+          <span className="text-xs sm:hidden">{date}</span>
+          <Suspense fallback={<p className="h-2"></p>}>
+            <span className="flex gap-1 text-xs text-gray-600 dark:text-gray-400">
+              <EyeIcon /> {views} views
+            </span>
+          </Suspense>
+        </div>
       </div>
-      <Divider />
-      <span className="text-xs sm:text-sm text-secondary">{date}</span>
+      <span className="hidden sm:block relative mt-3 flex-1 h-[1px] bg-zinc-200 dark:bg-zinc-700"></span>
+      <span className="hidden text-sm text-secondary sm:block">{date}</span>
     </div>
   );
 };
