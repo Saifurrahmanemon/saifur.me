@@ -70,16 +70,49 @@ function Navbar() {
 
 function MobileMenu() {
   const pathname = usePathname();
+  const [isHidden, setIsHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  let prev: number;
+
+  // logic used to show/hide the navbar on scroll
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    if (prev > latest) {
+      setIsHidden(false);
+    }
+    if (prev < latest) {
+      setIsHidden(true);
+    }
+    prev = latest;
+  });
+
+  const variants = {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0 }
+  };
+
   return (
     <div>
       <div>
-        <div className="fixed flex items-center justify-between w-full px-4 py-4">
-          <LetterLogo h="2rem" />
-          <ThemeSwitch />
-        </div>
+        <AnimatePresence>
+          <motion.header
+            layout
+            variants={variants}
+            animate={isHidden ? 'hidden' : 'visible'}
+            transition={{
+              ease: 'easeInOut',
+              duration: 0.4
+            }}
+            className="fixed flex items-center justify-between w-full px-4 py-4 z-[500]"
+          >
+            <LetterLogo h="2rem" />
+            <ThemeSwitch />
+          </motion.header>
+        </AnimatePresence>
       </div>
-      <div className="z-[500] fixed bottom-0 w-full py-2 bg-gray-600 rounded-2xl background-drop  dark:border-gray-600 border-t">
-        <div className="flex items-center justify-around max-w-lg gap-2 px-5 mx-auto">
+      <div className="z-[500] fixed bottom-1 w-full  background-drop  px-2">
+        <div className="flex items-center justify-around max-w-lg gap-2 px-5 py-0.5 mx-auto border border-gray-300 dark:border-gray-600 rounded-2xl 600 ">
           {LINKS.map((item) => (
             <Link
               href={item.href}
@@ -90,7 +123,7 @@ function MobileMenu() {
               )}
             >
               <div>{item.Icon}</div>
-              <p className="text-sm text-hover-primary">{item.text}</p>
+              <p className="text-xs text-hover-primary">{item.text}</p>
             </Link>
           ))}
         </div>
@@ -100,44 +133,15 @@ function MobileMenu() {
 }
 
 export default function NavMenu() {
-  const [hidden, setHidden] = useState(false);
-  const { scrollY } = useScroll();
-
-  let prev: number;
-
-  // logic used to show/hide the navbar on scroll
-
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    if (prev > latest) {
-      setHidden(false);
-    }
-    if (prev < latest) {
-      setHidden(true);
-    }
-    prev = latest;
-  });
-
-  const variants = {
-    visible: { opacity: 1, y: 0 },
-    hidden: { opacity: 0, y: -25 }
-  };
-
   return (
-    <>
-      <AnimatePresence>
-        <motion.header
-          layout
-          variants={variants}
-          animate={{ opacity: hidden ? 0 : 1 }}
-          transition={{ duration: 0.3 }}
-          className="w-full sm:hidden"
-        >
-          <MobileMenu />
-        </motion.header>
-      </AnimatePresence>
-      <header className="w-full">
+    <header>
+      <div className="w-full sm:hidden">
+        <MobileMenu />
+      </div>
+
+      <div className="w-full">
         <Navbar />
-      </header>
-    </>
+      </div>
+    </header>
   );
 }

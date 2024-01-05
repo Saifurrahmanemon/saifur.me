@@ -3,7 +3,7 @@ import 'styles/globals.css';
 import 'styles/tailwind.css';
 import Footer from '~/ui/footer';
 import NavMenu from '~/ui/navbar';
-import { inter, newsreader } from './fonts';
+import { inter, sofia } from './fonts';
 import Providers from './providers';
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html
-      className={`${inter.className} ${newsreader.variable}`}
+      className={`${inter.className} ${sofia.variable}`}
       lang="en"
       suppressHydrationWarning
     >
@@ -21,7 +21,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <NavMenu />
-          <main className="relative app-container sm-content-pt min-h-[calc(100vh-130px)]">
+          <main className="relative app-container sm-content-pt min-h-[calc(100vh-130px)] mb-20 sm:mb-auto">
             <div className="app-max-w">{children}</div>
           </main>
           <Footer />
