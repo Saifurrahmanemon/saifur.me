@@ -1,10 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import Link from 'next/link';
+import { getAllWritingsViews } from '~/lib/views';
 import { getSortedWritings } from '~/lib/writings';
-import { formatDate } from '../utils';
+import { formatDate, formatNumber } from '../utils';
 import HeroSection from './components/hero-section';
-import { EyeIcon } from './writing/[slug]/page';
-import { formatNumber, getAllWritingsViews } from './writing/page';
+import { EyeIcon } from './components/static-icons';
 
 const ReachMe = () => {
   return (

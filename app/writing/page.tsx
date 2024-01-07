@@ -1,12 +1,10 @@
-import { Redis } from '@upstash/redis';
-import { unstable_noStore as noStore } from 'next/cache';
+import { EyeIcon } from 'app/components/static-icons';
+
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { getAllWritingsViews } from '~/lib/views';
 import { getSortedWritings } from '~/lib/writings';
-import { formatDate } from '~/utils/index';
-import { EyeIcon } from './[slug]/page';
-
-const redis = Redis.fromEnv();
+import { formatDate, formatNumber } from '~/utils/index';
 
 interface CardProps {
   title: string;
@@ -15,44 +13,7 @@ interface CardProps {
   slug: string;
 }
 
-export function formatNumber(
-  itemSlug: string,
-  list: Record<string, number>,
-  options?: {
-    notation?: 'standard' | 'compact' | 'scientific' | 'engineering';
-  }
-): string {
-  const numberToFormat = list[itemSlug] ?? 0;
-  const formattedNumber = new Intl.NumberFormat('en-US', {
-    notation: options?.notation ?? 'standard'
-  }).format(numberToFormat);
-
-  return formattedNumber;
-}
-
-export async function getAllWritingsViews(
-  writings: { slug: string }[] | undefined
-): Promise<Record<string, number>> {
-  noStore();
-  const viewsArray = await redis.mget<number[]>(
-    writings?.map((w) => ['pageviews', 'projects', w.slug].join(':')) || []
-  );
-
-  const allWritingsViews = viewsArray.reduce(
-    (acc, v, i) => {
-      const currentSlug = writings?.[i]?.slug;
-      if (currentSlug) {
-        acc[currentSlug] = v ?? 0;
-      }
-      return acc;
-    },
-    {} as Record<string, number>
-  );
-
-  return allWritingsViews;
-}
-
-export const Card = (props: CardProps) => {
+const Card = (props: CardProps) => {
   const { title, date, views } = props;
   return (
     <div className="flex items-stretch justify-between w-full gap-2 px-3 py-2 transition-all rounded-lg cursor-pointer card-hover ">
