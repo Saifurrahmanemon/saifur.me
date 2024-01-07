@@ -13,10 +13,13 @@ export const formatDate = (
   });
 };
 
-
-
-
-export function findIsPathActive({ pathname, linkHref }: { pathname: string, linkHref: string }): boolean {
+export function findIsPathActive({
+  pathname,
+  linkHref
+}: {
+  pathname: string;
+  linkHref: string;
+}): boolean {
   return (
     pathname === linkHref ||
     (linkHref.length > 1 && pathname.startsWith(linkHref))
