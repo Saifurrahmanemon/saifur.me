@@ -1,14 +1,16 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { findIsPathActive } from '../utils';
 import { INavItem } from './navbar';
 
 export function NavItem({ link }: { link: INavItem }) {
   const pathname = usePathname();
 
-  const isPathActive =
-    pathname === link.href ||
-    (link.href.length > 1 && pathname.startsWith(link.href));
+  const isPathActive = findIsPathActive({
+    pathname,
+    linkHref: link.href
+  });
 
   return (
     <>

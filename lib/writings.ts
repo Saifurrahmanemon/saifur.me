@@ -67,3 +67,12 @@ function getMDXData(dir: string) {
 export function getWritings() {
   return getMDXData(path.join(process.cwd(), 'content'));
 }
+
+export function getSortedWritings() {
+  return getWritings()?.sort((a, b) => {
+    return (
+      new Date(b.metadata.publishedAt).valueOf() -
+      new Date(a.metadata.publishedAt).valueOf()
+    );
+  });
+}

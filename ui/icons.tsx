@@ -164,6 +164,7 @@ export function ProjectIcon() {
     </svg>
   );
 }
+
 export function ProblemSolvingIcon() {
   return (
     <svg
