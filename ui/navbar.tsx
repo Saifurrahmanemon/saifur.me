@@ -11,7 +11,8 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
-import { BlogIcon, HomeIcon, LetterLogo, UserIcon } from './icons';
+import { findIsPathActive } from '../utils';
+import { BlogIcon, HomeIcon, LetterLogo } from './icons';
 import { NavItem } from './nav-item';
 import ThemeSwitch from './theme-switch';
 
@@ -22,10 +23,11 @@ export interface INavItem {
   Icon?: React.ReactNode;
 }
 
+// I hate myself 😤
 const LINKS: INavItem[] = [
   { text: 'Home', href: '/', id: 0, Icon: <HomeIcon /> },
-  { text: 'Writing', href: '/writing', id: 1, Icon: <BlogIcon /> },
-  { text: 'Journey', href: '/journey', id: 2, Icon: <UserIcon /> }
+  { text: 'Writing', href: '/writing', id: 1, Icon: <BlogIcon /> }
+  // { text: 'Journey', href: '/journey', id: 2, Icon: <UserIcon /> }
   // { text: 'Projects', href: '/projects', id: 3, Icon: <ProjectIcon /> },
   // { text: 'About', href: '/about', id: 4, Icon: <UserIcon /> }
 ];
@@ -113,19 +115,25 @@ function MobileMenu() {
       </div>
       <div className="z-[500] fixed bottom-1 w-full  background-drop  px-2">
         <div className="flex items-center justify-around max-w-lg gap-2 px-5 py-0.5 mx-auto border border-gray-300 dark:border-gray-600 rounded-2xl 600 ">
-          {LINKS.map((item) => (
-            <Link
-              href={item.href}
-              key={`${item.text}_mobile`}
-              className={clsx(
-                pathname === item.href ? 'text-primary' : 'text-secondary',
-                'flex flex-col items-center justify-center py-1 cursor-pointer'
-              )}
-            >
-              <div>{item.Icon}</div>
-              <p className="text-xs text-hover-primary">{item.text}</p>
-            </Link>
-          ))}
+          {LINKS.map((item) => {
+            const isPathActive = findIsPathActive({
+              linkHref: item.href,
+              pathname
+            });
+            return (
+              <Link
+                href={item.href}
+                key={`${item.text}_mobile`}
+                className={clsx(
+                  isPathActive ? 'text-primary' : 'text-secondary',
+                  'flex flex-col items-center justify-center py-1 cursor-pointer'
+                )}
+              >
+                <div>{item.Icon}</div>
+                <p className="text-xs text-hover-primary">{item.text}</p>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

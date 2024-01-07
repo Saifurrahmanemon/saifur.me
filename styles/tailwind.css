@@ -14,7 +14,7 @@
   }
 
   .bg-secondary {
-    @apply bg-gray-100 dark:bg-gray-800;
+    @apply bg-gray-100 dark:bg-neutral-800;
   }
 
   .bg-alt {
