@@ -1,40 +1,13 @@
-import { Redis } from '@upstash/redis';
+import { getViewsCount } from '~/lib/views';
 import { getWritings } from '~/lib/writings';
 import { CustomMDXRemote } from '~/ui/mdx';
 import { formatDate } from '~/utils/index';
 import { ReportView } from './view';
 
-export const EyeIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-      <circle cx="12" cy="12" r="3" />
-    </svg>
-  );
-};
-
 type Props = {
   params: {
     slug: string;
   };
-};
-
-const redis = Redis.fromEnv();
-
-export const getViewsCount = async (slug: string) => {
-  const data =
-    (await redis.get<number>(['pageviews', 'projects', slug].join(':'))) ?? 0;
-
-  return data;
 };
 
 export const revalidate = 60;
