@@ -1,4 +1,3 @@
-
 export function formatNumber(
   itemSlug: string,
   list: Record<string, number>,
@@ -13,7 +12,6 @@ export function formatNumber(
 
   return formattedNumber;
 }
-
 
 export const formatDate = (
   date: string,
