@@ -1,3 +1,4 @@
+import { EyeIcon } from 'app/components/static-icons';
 import { getViewsCount } from '~/lib/views';
 import { getWritings } from '~/lib/writings';
 import { CustomMDXRemote } from '~/ui/mdx';
@@ -42,7 +43,9 @@ export default async function WritingPage({ params }: Props) {
 
         <div className="flex items-center justify-between my-2 text-sm text-secondary">
           <p>Published on {formattedPubDate}</p>
-          <p className="flex items-center gap-1"> {views} views</p>
+          <p className="flex items-center gap-1">
+            <EyeIcon /> {views} views
+          </p>
         </div>
       </section>
       <article className="my-5 prose prose-stone dark:prose-invert text-secondary">
