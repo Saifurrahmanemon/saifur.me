@@ -12,6 +12,7 @@ const Tooltip = ({ text, children }: Props) => {
   return (
     <div className="relative inline">
       <button
+        aria-label="tooltip-button"
         className="focus:outline-none focus:shadow-outline"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}

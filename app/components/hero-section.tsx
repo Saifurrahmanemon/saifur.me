@@ -18,12 +18,22 @@ function HeroSection() {
           </h2>
           <div className="flex items-center gap-1 mt-1">
             <Tooltip text="Github">
-              <a rel="noopener noreferrer" target="_blank" href={githubLink}>
+              <a
+                rel="noopener noreferrer"
+                aria-label="github-link"
+                target="_blank"
+                href={githubLink}
+              >
                 <GithubIcon />
               </a>
             </Tooltip>
             <Tooltip text="LinkedIn">
-              <a rel="noopener noreferrer" target="_blank" href={linkedInLink}>
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                aria-label="linkedin-link"
+                href={linkedInLink}
+              >
                 <LinkedInIcon />
               </a>
             </Tooltip>
