@@ -6,6 +6,11 @@ import { getAllWritingsViews } from '~/lib/views';
 import { getSortedWritings } from '~/lib/writings';
 import { formatDate, formatNumber } from '~/utils/index';
 
+export const metadata = {
+  title: 'Writing',
+  description: 'Explore a world of creativity and expression on writing page'
+};
+
 interface CardProps {
   title: string;
   date: string;
