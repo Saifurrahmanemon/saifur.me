@@ -11,8 +11,8 @@ const size = {
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const title = searchParams.get('title');
-  const interSemiBold = fetch(
-    new URL('./Inter-SemiBold.ttf', import.meta.url)
+  const interRegular = fetch(
+    new URL('../../public/fonts/Inter-Regular.ttf', import.meta.url)
   ).then((res) => res.arrayBuffer());
 
   return new ImageResponse(
@@ -49,9 +49,9 @@ export async function GET(req: NextRequest) {
       fonts: [
         {
           name: 'Inter',
-          data: await interSemiBold,
+          data: await interRegular,
           style: 'normal',
-          weight: 400
+          weight: 500
         }
       ]
     }
