@@ -8,6 +8,9 @@ import NavMenu from '~/ui/navbar';
 import { inter, sofia } from './fonts';
 import Providers from './providers';
 
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
 const title = 'Saifur Rahman Emon';
 const description =
   'Software developer with an immense love for Programming, Books, Bike.';
@@ -62,6 +65,8 @@ export default function RootLayout({
             <div className="app-max-w">{children}</div>
           </main>
           <Footer />
+          <SpeedInsights />
+          <Analytics />
         </Providers>
       </body>
     </html>
