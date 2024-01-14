@@ -3,7 +3,9 @@ import { unstable_noStore as noStore } from 'next/cache';
 
 const redis = Redis.fromEnv();
 
+
 export const getViewsCount = async (slug: string) => {
+  noStore();
   const data =
     (await redis.get<number>(['pageviews', 'projects', slug].join(':'))) ?? 0;
 
