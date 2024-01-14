@@ -50,7 +50,7 @@ type Props = {
   };
 };
 
-export const revalidate = 60;
+// export const revalidate = 60;
 
 export default async function WritingPage({ params }: Props) {
   const writing = getWritings().find((item) => item.slug === params.slug);

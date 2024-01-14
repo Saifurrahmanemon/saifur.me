@@ -8,6 +8,7 @@ const size = {
   width: 1200,
   height: 630
 };
+
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const title = searchParams.get('title');
