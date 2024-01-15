@@ -7,12 +7,12 @@ const redis = Redis.fromEnv();
 
 export async function getViewsCount(slug: string) {
   noStore();
-  const data =
-    await redis.get<number>(['pageviews', 'projects', slug].join(':'))
-
+  const data = await redis.get<number>(
+    ['pageviews', 'projects', slug].join(':')
+  );
 
   return data ?? 0;
-};
+}
 
 export async function getAllWritingsViews(
   writings: { slug: string }[] | undefined

@@ -45,8 +45,9 @@ export async function POST(req: NextRequest) {
   const res = await redis.incr(['pageviews', 'projects', slug].join(':'));
 
   if (res) {
-    console.log(res)
-    revalidatePath('/writing', 'page')
+    // eslint-disable-next-line no-console
+    console.log(res);
+    revalidatePath('/writing', 'page');
   }
 
   return new NextResponse(null, { status: 202 });
