@@ -1,4 +1,5 @@
 import { Redis } from '@upstash/redis';
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 const redis = Redis.fromEnv();
@@ -41,6 +42,13 @@ export async function POST(req: NextRequest) {
       return new NextResponse('Already viewed', { status: 202 });
     }
   }
-  await redis.incr(['pageviews', 'projects', slug].join(':'));
+  const res = await redis.incr(['pageviews', 'projects', slug].join(':'));
+
+  if (res) {
+    // eslint-disable-next-line no-console
+    console.log(res);
+    revalidatePath('/writing', 'page');
+  }
+
   return new NextResponse(null, { status: 202 });
 }

@@ -1,16 +1,18 @@
+'use server';
+
 import { Redis } from '@upstash/redis';
 import { unstable_noStore as noStore } from 'next/cache';
 
 const redis = Redis.fromEnv();
 
-
-export const getViewsCount = async (slug: string) => {
+export async function getViewsCount(slug: string) {
   noStore();
-  const data =
-    (await redis.get<number>(['pageviews', 'projects', slug].join(':'))) ?? 0;
+  const data = await redis.get<number>(
+    ['pageviews', 'projects', slug].join(':')
+  );
 
-  return data;
-};
+  return data ?? 0;
+}
 
 export async function getAllWritingsViews(
   writings: { slug: string }[] | undefined
