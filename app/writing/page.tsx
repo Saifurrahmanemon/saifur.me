@@ -53,7 +53,11 @@ async function WritingsPage() {
       <main className="mx-4">
         <section className="flex flex-col gap-4 mx-auto mt-3">
           {writings.map((item, idx) => (
-            <Link key={`${item.slug}_${idx}`} href={`/writing/${item.slug}`}>
+            <Link
+              prefetch={false}
+              key={`${item.slug}_${idx}`}
+              href={`/writing/${item.slug}`}
+            >
               <Card
                 views={formatNumber(item.slug, allWritingsViews, {
                   notation: 'compact'
