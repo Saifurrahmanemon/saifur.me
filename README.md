@@ -1,52 +1,56 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with
-[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# leerob.io
 
-First, run the development server:
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Database**: [Postgres](https://vercel.com/postgres)
+- **Authentication**: [NextAuth.js](https://next-auth.js.org)
+- **Deployment**: [Vercel](https://vercel.com)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com)
+- **Analytics**: [Vercel Analytics](https://vercel.com/analytics)
+
+## Running Locally
+
+This application requires Node.js v18.17+.
 
 ```bash
-npm run dev
-# or
-yarn dev
+git clone https://github.com/leerob/leerob.io.git
+cd leerob.io
+bun install
+bun run setup # Remove all of my personal information
+bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the
-result.
+Create a `.env.local` file similar to [`.env.example`](https://github.com/leerob/leerob.io/blob/main/.env.example).
 
-You can start editing the page by modifying `pages/index.tsx`. The page
-auto-updates as you edit the file.
+## Database Schema
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello). This
-endpoint can be edited in `pages/api/hello.ts`.
+```sql
+CREATE TABLE redirects (
+  id SERIAL PRIMARY KEY,
+  source VARCHAR(255) NOT NULL,
+  destination VARCHAR(255) NOT NULL,
+  permanent BOOLEAN NOT NULL
+);
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are
-treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead
-of React pages.
+CREATE TABLE guestbook (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255) NOT NULL,
+  body TEXT NOT NULL,
+  created_by VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP
+);
 
-This project uses
-[`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to
-automatically optimize and load Inter, a custom Google Font.
+CREATE TABLE views (
+  slug VARCHAR(255) PRIMARY KEY,
+  count INT NOT NULL
+);
+```
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
+1. You are free to use this code as inspiration.
+2. Please do not copy it directly.
+3. Crediting the author is appreciated.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js
-  features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out
-[the Next.js GitHub repository](https://github.com/vercel/next.js/) - your
-feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the
-[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
-
-Check out our
-[Next.js deployment documentation](https://nextjs.org/docs/deployment) for more
-details.
+Please remove all of my personal information (blog posts, images, etc.) by running `bun run setup`.
