@@ -9,4 +9,4 @@ My coding adventures have not only honed my technical skills but also instilled 
 
 When I'm not immersed in lines of code, you'll often find me lost in the world of literature, flipping through the pages of captivating books, or embracing the exhilarating freedom of the open road as I ride my bike.
 `;
-export const domain = 'saifur.me';
+export const domain = 'www.saifur.me';
