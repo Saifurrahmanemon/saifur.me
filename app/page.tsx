@@ -12,7 +12,7 @@ const ReachMe = () => {
       <p>
         Reach me at:{' '}
         <em className="underline cursor-pointer">
-          <a href="mailto: saifemon789@gmail.com">saifemon@gmail.com</a>
+          <a href="mailto: saifemon789@gmail.com">saifemon789@gmail.com</a>
         </em>
       </p>
     </section>

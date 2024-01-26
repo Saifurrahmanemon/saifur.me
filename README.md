@@ -1,4 +1,3 @@
-
 # leerob.io
 
 - **Framework**: [Next.js](https://nextjs.org/)
@@ -20,7 +19,8 @@ bun run setup # Remove all of my personal information
 bun dev
 ```
 
-Create a `.env.local` file similar to [`.env.example`](https://github.com/leerob/leerob.io/blob/main/.env.example).
+Create a `.env.local` file similar to
+[`.env.example`](https://github.com/leerob/leerob.io/blob/main/.env.example).
 
 ## Database Schema
 
@@ -53,4 +53,5 @@ CREATE TABLE views (
 2. Please do not copy it directly.
 3. Crediting the author is appreciated.
 
-Please remove all of my personal information (blog posts, images, etc.) by running `bun run setup`.
+Please remove all of my personal information (blog posts, images, etc.) by
+running `bun run setup`.
