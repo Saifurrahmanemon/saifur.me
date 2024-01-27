@@ -14,7 +14,7 @@ Create a `.env` file similar to
 
 ## View Counter
 
-To enhance the accuracy of our view counter, we employ Redis to prevent a single
+To enhance the accuracy of our view counter, we used Redis to prevent a single
 user from increasing the count multiple times within a specified period, which
 is currently set at 24 hours.
 
