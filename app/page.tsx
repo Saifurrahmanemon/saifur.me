@@ -23,13 +23,11 @@ const About = () => {
   return (
     <section>
       <p className="my-3 text-secondary">
-        Developer with a fervent passion for crafting exceptional digital{' '}
-        <em>Web-based Products</em>. My journey in the world of software
-        development has been nothing short of exhilarating. I thrive on the
-        challenge of transforming innovative ideas into functional and{' '}
-        user-friendly solutions that make a real difference. Whether it's
-        crafting elegant algorithms or designing intuitive user interfaces, I
-        relish every moment of the creative process.
+        Developer with a fervent passion for crafting exceptional{' '}
+        <em>Web-based Products</em>. <br />
+        My journey in the world of software development has been nothing short
+        of exhilarating. I thrive on the challenge of transforming innovative
+        ideas into scalable and user-friendly solutions.
       </p>
 
       <p className="my-3 text-secondary">
