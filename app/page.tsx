@@ -23,11 +23,11 @@ const About = () => {
   return (
     <section>
       <p className="my-3 text-secondary">
-        Developer with a fervent passion for crafting exceptional{' '}
+        Developer with a passion for crafting exceptional{' '}
         <em>Web-based Products</em>. <br />
-        My journey in the world of software development has been nothing short
-        of exhilarating. I thrive on the challenge of transforming innovative
-        ideas into scalable and user-friendly solutions.
+        Building software has been a wild ride with plenty of ups and downs. I
+        get a real kick out of taking raw ideas and turning them into something
+        that works well and makes sense for the people using it.
       </p>
 
       <p className="my-3 text-secondary">
@@ -36,13 +36,12 @@ const About = () => {
       </p>
 
       <p className="my-3 text-secondary">
-        When I'm not immersed in lines of code, you'll often find me lost in the
-        world of literature, flipping through the pages of captivating{' '}
-        <em>Books</em>, or embracing the exhilarating freedom of the open road
-        as I ride my bike. Feeling the wind rush past and taking in the sights
-        around me. Whether it's a leisurely ride through scenic paths or
-        exploring new routes, <em>Riding</em> gives me a sense of freedom and
-        allows me to disconnect and recharge.
+        When I’m not deep in code, you’ll usually find me with a <em>Book</em>{' '}
+        in hand, getting lost in a great story. And when I need to clear my
+        head, nothing beats hitting the open road on my <em>Bike</em>. There’s
+        something about the wind in my face and the world rushing by that just
+        feels freeing. Whether I’m cruising scenic trails or discovering new
+        paths, riding helps me disconnect, recharge, and feel completely alive.
       </p>
     </section>
   );
