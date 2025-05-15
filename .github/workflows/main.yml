@@ -4,20 +4,30 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+
 jobs:
   next-app-workflow:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: Use Node.js 18.x
         uses: actions/setup-node@v2
         with:
           node-version: 18.x
-      - name: npm ci
-        run: npm ci
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
       - name: format
-        run: npm run prettier
+        run: pnpm run prettier
+
       - name: lint
-        run: npm run lint
-      - name: typescript
-        run: npm run check-types
+        run: pnpm run lint
+
+      - name: TypeScript check
+        run: pnpm run check-types

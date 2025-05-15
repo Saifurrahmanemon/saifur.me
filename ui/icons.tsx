@@ -289,6 +289,3 @@ export function LinkedInIcon() {
     </motion.svg>
   );
 }
-
-
-
