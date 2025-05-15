@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
 import { findIsPathActive } from '../utils';
-import { BlogIcon, HomeIcon, LetterLogo } from './icons';
+import { BlogIcon, HomeIcon, LetterLogo, ProjectIcon } from './icons';
 import { NavItem } from './nav-item';
 import ThemeSwitch from './theme-switch';
 
@@ -26,7 +26,9 @@ export interface INavItem {
 // I hate myself 😤
 const LINKS: INavItem[] = [
   { text: 'Home', href: '/', id: 0, Icon: <HomeIcon /> },
-  { text: 'Writing', href: '/writing', id: 1, Icon: <BlogIcon /> }
+  { text: 'Writing', href: '/writing', id: 1, Icon: <BlogIcon /> },
+  { text: 'Work', href: '/work', id: 1, Icon: <ProjectIcon /> }
+
   // { text: 'Journey', href: '/journey', id: 2, Icon: <UserIcon /> }
   // { text: 'Projects', href: '/projects', id: 3, Icon: <ProjectIcon /> },
   // { text: 'About', href: '/about', id: 4, Icon: <UserIcon /> }
