@@ -1,6 +1,6 @@
 'use client';
 
-import { company, jobTitle, name } from '~/lib/user_details';
+import { name } from '~/lib/user_details';
 import { GithubIcon, LinkedInIcon } from '~/ui/icons';
 import Tooltip from '~/ui/tooltip';
 
@@ -14,7 +14,8 @@ function HeroSection() {
         <div className="flex flex-col">
           <h1 className="font-mono text-lg">{name}</h1>
           <h2 className="mb-0 text-gray-700 dark:text-gray-200">
-            {jobTitle} at <span className="font-semibold">{company}.</span>
+            {/* {jobTitle} at <span className="font-semibold">{company}.</span> */}
+            <em>Software Engineer</em>
           </h2>
           <div className="flex items-center gap-1 mt-1">
             <Tooltip text="Github">
