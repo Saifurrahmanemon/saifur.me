@@ -115,7 +115,7 @@ function MobileMenu() {
           </motion.header>
         </AnimatePresence>
       </div>
-      <div className="z-[500] fixed bottom-1 w-full  background-drop  px-2">
+      <div className="z-[500] fixed bottom-1 w-full  background-drop will-change-transform  px-2">
         <div className="flex items-center justify-around max-w-lg gap-2 px-5 py-0.5 mx-auto border border-gray-300 dark:border-gray-600 rounded-2xl 600 ">
           {LINKS.map((item) => {
             const isPathActive = findIsPathActive({
