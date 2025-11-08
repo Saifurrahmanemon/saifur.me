@@ -13,6 +13,15 @@ export const domain = 'www.saifur.me';
 
 export const workExperience = [
   {
+    company: 'Equiply',
+    position: 'Co-Founder / Product Lead',
+    period: 'Jun 2025 – Present',
+    logo: 'Equiply',
+    contributions: [
+      'Equiply is a cloud-based equipment management platform that helps small businesses, schools, and NGOs track, assign, and manage their equipment in one unified system. Built in collaboration with the Deftyled Team, I lead product design and development, defining the product vision, roadmap, and user experience while balancing functionality with simplicity. I oversee end-to-end product development, branding, marketing, and user feedback integration to refine product-market fit and drive growth.'
+    ]
+  },
+  {
     company: 'Earnest Data Analytics',
     position: 'Software Engineer',
     period: '2022 – 2025',
