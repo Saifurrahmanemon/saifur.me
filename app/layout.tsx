@@ -13,7 +13,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const title = 'Saifur Rahman Emon';
 const description =
-  'Software developer with an immense love for Programming, Books, Bike.';
+  'Software Engineer with an immense love for Programming, Books, Bike.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${domain}`),
