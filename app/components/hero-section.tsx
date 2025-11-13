@@ -1,11 +1,12 @@
 'use client';
 
 import { name } from '~/lib/user_details';
-import { GithubIcon, LinkedInIcon } from '~/ui/icons';
+import { GithubIcon, LinkedInIcon, XIcon } from '~/ui/icons';
 import Tooltip from '~/ui/tooltip';
 
 const githubLink = 'https://github.com/Saifurrahmanemon';
 const linkedInLink = 'https://linkedin.com/in/saifurrahmanemon';
+const xLink = 'https://x.com/Saifur_Maker';
 
 function HeroSection() {
   return (
@@ -17,7 +18,17 @@ function HeroSection() {
             {/* {jobTitle} at <span className="font-semibold">{company}.</span> */}
             <em>Software Engineer</em>
           </h2>
-          <div className="flex items-center gap-1 mt-1">
+          <div className="flex items-center gap-2 mt-1">
+            <Tooltip text="X">
+              <a
+                rel="noopener noreferrer"
+                aria-label="x-link"
+                target="_blank"
+                href={xLink}
+              >
+                <XIcon />
+              </a>
+            </Tooltip>
             <Tooltip text="Github">
               <a
                 rel="noopener noreferrer"
