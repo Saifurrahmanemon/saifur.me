@@ -51,6 +51,14 @@ export const projects = [
     technologies: ['TypeScript', 'Monorepo', 'CLI']
   },
   {
+    name: 'Ephemeral Diary',
+    description:
+      "It's purely ephemeral, offering a meditative, pressure-free way to express thoughts that don't need to be remembered. Everything is private and temporary, fading away within a second.",
+    logo: 'ED',
+    link: 'https://ephemeral-diary.vercel.app',
+    technologies: ['Next.JS', 'TypeScript', 'TailwindCSS']
+  },
+  {
     name: 'Toggl Categorizer',
     description:
       'Built Toggl Categorizer, a full-stack tool designed to solve the pain of manually tagging time entries in Toggl. By integrating Toggl APIs with Google’s Gemini AI, the application automatically classifies and labels time entries based on context and historical patterns. ',
