@@ -1,0 +1,269 @@
+---
+title: 'The Future of SaaS: AI as the Controller, Not the Feature'
+publishedAt: '2026-02-25'
+summary:
+  'Old SaaS gave us forms and CRUD. New SaaS hands the wheel to AI. Here is what
+  that actually means for how we build, and where frontend engineers land in all
+  of this.'
+---
+
+There is a quiet shift happening in how software gets built. Not the loud,
+press-release kind of shift. The kind you only notice when you sit back and
+squint at the last five years of your work and think, _wait, something is
+different here_.
+
+I want to talk about that shift. And I want to be direct about it.
+
+AI is no longer a feature you bolt onto your SaaS product. It is becoming the
+controller. The thing that decides what happens next, what data moves where, and
+what the user never has to touch at all.
+
+Grab something to drink. This one is worth sitting with.
+
+### Old SaaS: Forms, CRUD, and the Illusion of Power
+
+Think about every SaaS product you have used in the last decade. Stripe
+dashboard. Notion. Linear. Salesforce. HubSpot.
+
+What do they all have in common?
+
+They gave you an interface to manage _your own data_. You filled out a form. You
+clicked a button. A row got written to a Postgres table somewhere. You came back
+tomorrow and did it again.
+
+That was the deal. The software was a glorified spreadsheet with better design.
+We called it productivity. It was really just _organized manual labor_.
+
+```
+User fills form → API call → DB write → User fills next form
+```
+
+The user was always the controller. The software was just the muscle. And for a
+long time that was fine, because automating decisions was either too expensive,
+too risky, or just not technically possible.
+
+So we built abstractions on top of manual effort and charged subscriptions for
+the privilege. Good business. Not great software, if we are being real about it.
+
+### New SaaS: AI-First Workflows and the Controller Problem
+
+Here is what changes when AI enters the picture properly. Not as a chatbot
+sidebar, not as a "generate with AI ✨" button next to a text field, but as the
+actual orchestration layer.
+
+The user stops being the one who decides _what to do next_.
+
+That sounds small. It is not small. It rewires the entire product.
+
+Take something like a customer support platform. In old SaaS:
+
+1. Ticket comes in
+2. Agent reads it
+3. Agent picks a category
+4. Agent writes a reply
+5. Agent clicks send
+
+In new SaaS, built AI-first:
+
+1. Ticket comes in
+2. AI reads it, classifies it, checks account history, drafts a reply, routes to
+   the right person _if_ escalation is needed
+3. Agent reviews and approves, or skips that step entirely
+
+The human is now in the loop only when the AI genuinely needs them. That is a
+different product. Different architecture. Different mental model entirely.
+
+### Enter MCP: The Protocol That Makes This Real
+
+This is where **Model Context Protocol (MCP)** comes in, and I want to spend
+some time here because it is the piece that makes AI-as-controller actually
+_work_ in practice.
+
+MCP, introduced by Anthropic, is an open protocol that standardizes how AI
+models connect to external data sources and tools. Think of it as a USB-C port,
+but for AI and your backend services.
+
+Before MCP, connecting an AI to your product meant custom integrations every
+single time. You were hand-rolling function calls, managing authentication per
+service, and praying the LLM understood your custom schema. It was glue code all
+the way down.
+
+With MCP, you expose your tools and data sources through a standardized server,
+and any MCP-compatible AI client can talk to it.
+
+Here is what that looks like in practice. A basic MCP server in Node.js:
+
+```javascript
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { z } from 'zod';
+
+const server = new McpServer({
+  name: 'my-saas-tools',
+  version: '1.0.0'
+});
+
+// Expose a tool the AI can call
+server.tool(
+  'get_customer_tickets',
+  { customerId: z.string() },
+  async ({ customerId }) => {
+    const tickets = await db.tickets.findMany({ where: { customerId } });
+
+    return {
+      content: [{ type: 'text', text: JSON.stringify(tickets) }]
+    };
+  }
+);
+
+// Expose a resource the AI can read
+server.resource('company_docs', 'docs://handbook', async (uri) => {
+  const content = await fetchHandbook();
+  return {
+    contents: [{ uri: uri.href, mimeType: 'text/plain', text: content }]
+  };
+});
+
+const transport = new StdioServerTransport();
+await server.connect(transport);
+```
+
+Now your AI client, whatever model or agent framework you are using, can call
+`get_customer_tickets` like it would call any function. No custom integration.
+No per-service glue. Just tools and resources exposed through a standard
+interface.
+
+The AI becomes a consumer of your backend the same way a frontend was. Except it
+does not need a UI to do it.
+
+### MCP Tools vs Resources vs Prompts
+
+MCP has three core primitives worth understanding, because they map directly to
+how you design AI-first workflows:
+
+**Tools** are things the AI can _do_. Write to a database, send an email, call
+an external API. The AI decides when and how to use them based on the task.
+
+```javascript
+server.tool(
+  'create_invoice',
+  { amount: z.number(), clientId: z.string() },
+  async (args) => {
+    const invoice = await billing.createInvoice(args);
+    return {
+      content: [{ type: 'text', text: `Invoice ${invoice.id} created` }]
+    };
+  }
+);
+```
+
+**Resources** are things the AI can _read_. Documentation, customer records,
+configuration. These are exposed as URIs the AI can request when it needs
+context.
+
+```javascript
+server.resource('pricing_tiers', 'config://pricing', async () => {
+  return {
+    contents: [
+      {
+        uri: 'config://pricing',
+        mimeType: 'application/json',
+        text: JSON.stringify(pricingConfig)
+      }
+    ]
+  };
+});
+```
+
+**Prompts** are reusable templates, essentially pre-built instructions for
+common tasks. You define them on the server, and the client can request them
+when starting a workflow.
+
+```javascript
+server.prompt(
+  'handle_refund_request',
+  { ticketId: z.string() },
+  async ({ ticketId }) => {
+    const ticket = await db.tickets.find(ticketId);
+    return {
+      messages: [
+        {
+          role: 'user',
+          content: {
+            type: 'text',
+            text: `Process this refund request: ${JSON.stringify(ticket)}`
+          }
+        }
+      ]
+    };
+  }
+);
+```
+
+Three primitives. That is it. Tools, resources, prompts. Master these and you
+have the vocabulary to design any AI-first workflow.
+
+### Where Frontend Engineers Actually Fit
+
+I will be direct here, because I have seen a lot of hand-wringing in frontend
+communities about what AI means for the role.
+
+Frontend engineering is not going away. But the job is changing in a specific
+way that is worth naming clearly.
+
+**You are no longer just building interfaces for humans.**
+
+In an AI-first product, you are building:
+
+1. **Interfaces for humans to supervise AI.** Dashboards that show what the AI
+   did, why, and what needs review. This is actually harder than building a
+   form. It requires clear information hierarchy, good data visualization, and
+   thoughtful interaction design.
+
+2. **Interfaces for humans to intervene.** When the AI is uncertain or something
+   goes wrong, the human needs to step in cleanly. That handoff moment is a
+   frontend problem. Nobody else is thinking about it.
+
+3. **The trust layer.** Humans do not automatically trust AI outputs. The
+   frontend is what builds or destroys that trust. How you surface confidence
+   scores, show reasoning, or flag anomalies is a design and engineering problem
+   with enormous product impact.
+
+The forms do not go away either, by the way. Somebody has to build the MCP
+server configuration UI. Somebody has to design the tool permission screens, the
+audit logs, the workflow editors. These are all frontend problems.
+
+What changes is the center of gravity. The form used to _be_ the product. Now
+the form is scaffolding around an AI doing the real work.
+
+Building around intelligence rather than building intelligence is actually a
+more interesting problem than it sounds.
+
+### The Part Nobody Talks About
+
+Here is the thing I keep coming back to.
+
+We spent fifteen years building SaaS products that made humans faster at doing
+human work. Click faster. Fill forms faster. Organize data faster.
+
+AI-first SaaS does something different. It makes humans _less necessary_ for the
+routine stuff, so they can spend time on the things that actually require
+judgment.
+
+That is not a threat to engineering. It is the most interesting product design
+challenge of this generation.
+
+The frontend engineer who figures out how to make AI workflows legible,
+trustworthy, and recoverable, who builds the UI that makes a non-technical
+person comfortable handing control to an AI for the first time, that person is
+not being replaced.
+
+They are building the thing everyone else will copy.
+
+The old SaaS model was humans running software. The new model is software
+running with humans nearby, ready to step in.
+
+The frontend is where "nearby" lives.
+
+\_If you want to explore MCP further, the official spec lives at
+[modelcontextprotocol.io](https://modelcontextprotocol.io).
