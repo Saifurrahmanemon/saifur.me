@@ -9,8 +9,8 @@ summary:
 
 There is a quiet shift happening in how software gets built. Not the loud,
 press-release kind of shift. The kind you only notice when you sit back and
-squint at the last five years of your work and think, _wait, something is
-different here_.
+squint at the last five years of your work and think, wait, something is
+different here.
 
 I want to talk about that shift. And I want to be direct about it.
 
@@ -27,12 +27,12 @@ dashboard. Notion. Linear. Salesforce. HubSpot.
 
 What do they all have in common?
 
-They gave you an interface to manage _your own data_. You filled out a form. You
+They gave you an interface to manage your own data. You filled out a form. You
 clicked a button. A row got written to a Postgres table somewhere. You came back
 tomorrow and did it again.
 
 That was the deal. The software was a glorified spreadsheet with better design.
-We called it productivity. It was really just _organized manual labor_.
+We called it productivity. It was really just organized manual labor.
 
 ```
 User fills form → API call → DB write → User fills next form
@@ -51,7 +51,7 @@ Here is what changes when AI enters the picture properly. Not as a chatbot
 sidebar, not as a "generate with AI ✨" button next to a text field, but as the
 actual orchestration layer.
 
-The user stops being the one who decides _what to do next_.
+The user stops being the one who decides what to do next.
 
 That sounds small. It is not small. It rewires the entire product.
 
@@ -67,7 +67,7 @@ In new SaaS, built AI-first:
 
 1. Ticket comes in
 2. AI reads it, classifies it, checks account history, drafts a reply, routes to
-   the right person _if_ escalation is needed
+   the right person if escalation is needed
 3. Agent reviews and approves, or skips that step entirely
 
 The human is now in the loop only when the AI genuinely needs them. That is a
@@ -77,7 +77,7 @@ different product. Different architecture. Different mental model entirely.
 
 This is where **Model Context Protocol (MCP)** comes in, and I want to spend
 some time here because it is the piece that makes AI-as-controller actually
-_work_ in practice.
+work in practice.
 
 MCP, introduced by Anthropic, is an open protocol that standardizes how AI
 models connect to external data sources and tools. Think of it as a USB-C port,
@@ -141,7 +141,7 @@ does not need a UI to do it.
 MCP has three core primitives worth understanding, because they map directly to
 how you design AI-first workflows:
 
-**Tools** are things the AI can _do_. Write to a database, send an email, call
+**Tools** are things the AI can do. Write to a database, send an email, call
 an external API. The AI decides when and how to use them based on the task.
 
 ```javascript
@@ -157,7 +157,7 @@ server.tool(
 );
 ```
 
-**Resources** are things the AI can _read_. Documentation, customer records,
+**Resources** are things the AI can read. Documentation, customer records,
 configuration. These are exposed as URIs the AI can request when it needs
 context.
 
@@ -233,7 +233,7 @@ The forms do not go away either, by the way. Somebody has to build the MCP
 server configuration UI. Somebody has to design the tool permission screens, the
 audit logs, the workflow editors. These are all frontend problems.
 
-What changes is the center of gravity. The form used to _be_ the product. Now
+What changes is the center of gravity. The form used to be the product. Now
 the form is scaffolding around an AI doing the real work.
 
 Building around intelligence rather than building intelligence is actually a
@@ -246,7 +246,7 @@ Here is the thing I keep coming back to.
 We spent fifteen years building SaaS products that made humans faster at doing
 human work. Click faster. Fill forms faster. Organize data faster.
 
-AI-first SaaS does something different. It makes humans _less necessary_ for the
+AI-first SaaS does something different. It makes humans less necessary for the
 routine stuff, so they can spend time on the things that actually require
 judgment.
 
@@ -265,5 +265,5 @@ running with humans nearby, ready to step in.
 
 The frontend is where "nearby" lives.
 
-\_If you want to explore MCP further, the official spec lives at
+If you want to explore MCP further, the official spec lives at
 [modelcontextprotocol.io](https://modelcontextprotocol.io).
