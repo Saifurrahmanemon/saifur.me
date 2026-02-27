@@ -76,8 +76,8 @@ different product. Different architecture. Different mental model entirely.
 ### Enter MCP: The Protocol That Makes This Real
 
 This is where **Model Context Protocol (MCP)** comes in, and I want to spend
-some time here because it is the piece that makes AI-as-controller actually
-work in practice.
+some time here because it is the piece that makes AI-as-controller actually work
+in practice.
 
 MCP, introduced by Anthropic, is an open protocol that standardizes how AI
 models connect to external data sources and tools. Think of it as a USB-C port,
@@ -141,8 +141,8 @@ does not need a UI to do it.
 MCP has three core primitives worth understanding, because they map directly to
 how you design AI-first workflows:
 
-**Tools** are things the AI can do. Write to a database, send an email, call
-an external API. The AI decides when and how to use them based on the task.
+**Tools** are things the AI can do. Write to a database, send an email, call an
+external API. The AI decides when and how to use them based on the task.
 
 ```javascript
 server.tool(
@@ -233,8 +233,8 @@ The forms do not go away either, by the way. Somebody has to build the MCP
 server configuration UI. Somebody has to design the tool permission screens, the
 audit logs, the workflow editors. These are all frontend problems.
 
-What changes is the center of gravity. The form used to be the product. Now
-the form is scaffolding around an AI doing the real work.
+What changes is the center of gravity. The form used to be the product. Now the
+form is scaffolding around an AI doing the real work.
 
 Building around intelligence rather than building intelligence is actually a
 more interesting problem than it sounds.
